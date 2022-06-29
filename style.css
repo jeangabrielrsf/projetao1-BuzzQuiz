@@ -103,7 +103,6 @@
 .quizz img{
     height: 181px;
     width: 340px;
-    
 }
 
 .quizz{
@@ -113,7 +112,8 @@
     width: 340px;
     border: 5px;
     margin-left: 20px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(img/Rectangle\ 34.png);  
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(img/wp2715070.jpg); 
+    box-sizing: border-box;
 }
 
 
