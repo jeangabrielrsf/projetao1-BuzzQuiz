@@ -1,0 +1,131 @@
+/*PARTE DO TITULO*/
+*{
+    font-family: 'Roboto';
+    font-style: normal;
+}
+
+.titulo{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 69px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #EC362D;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+
+.titulo h1{
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 37px;
+    line-height: 43px;
+}
+/*DIV PAI DO CONTEÚDO DAS PÁGINAS */
+.pai{
+
+}
+/* PAGINA 1 (ABAIXO)*/
+
+.pagina1{
+
+}
+
+.criar-quizz{
+    margin: 146px auto 0px;
+    width: 1051px;
+    height: 181px;
+    border-radius: 5px;
+    border: 1px dashed #D4D4D4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.criar-quizz p{
+    text-align: center;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    color: #B9B9B9;
+}
+
+.criar-quiz-botao{
+    width: 151px;
+    height: 40px;
+    border-radius: 50px;
+    margin-top: 30px;
+    border: 1px dashed #EC362D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.criar-quiz-botao p{
+    color: #EC362D;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 25px;
+
+}
+
+.todos-quizzes{
+    margin: 100px auto 0px;
+    position: relative;
+    width: 1100px;
+    height: 420px;
+   
+    padding: 7px;
+}
+
+.todos-quizzes div h3{
+    position: relative;
+    top: 10px;
+    left: 15px;  
+    color: #000000;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    
+}
+.quizzes{
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.quizz{
+    position: relative;
+    margin-top: 15px;
+    height: 181px;
+    width: 340px;
+    border: 5px;
+    margin-left: 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%);
+
+}
+.quizz img{
+    height: 100%;
+    width: 100%;
+    
+}
+
+.quizz div{
+    position: absolute;
+    bottom: 15px;
+    left: 10px;
+
+}
+
+.quizz div h3{
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 22px;
+
+}
