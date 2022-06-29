@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+/*COR DE FUNDO DE TODAS AS PÁGINAS*/
+body {
+    background-color:#FAFAFA ;
+}
+
 .titulo{
     position: fixed;
     top: 0px;
@@ -138,4 +143,78 @@
     /* o gradiente abaixo nao está funcionando */
     background-color: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%);
     opacity: 1;
+}
+
+
+.escondido {
+    display: none;
+}
+
+
+
+/* CLASSES UTILIZADAS NA PÁGINA 2 */
+
+.pagina2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.capa-quiz {
+    margin-top: 69px;
+    width: 100%;
+    height: 227px;
+}
+
+.capa-quiz img {
+    object-fit:cover;
+    width: 100%;
+    height: 227px;
+}
+
+.caixa-pergunta {
+    width: 759px;
+    height: 676px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+.titulo-pergunta {
+    width: 688.16px;
+    height: 138px;
+    background-color: aqua;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 23px;
+    line-height: 27px;
+}
+
+.caixa-pergunta img {
+    width: 330px;
+    height: 175px;
+    object-fit: cover;
+}
+
+.perguntas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.perguntas p {
+    color: #000000;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23.44px;
+    margin-top: 6px;
+    margin-bottom: 15px;
 }
