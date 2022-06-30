@@ -31,6 +31,11 @@ renderizarQuizzes();
 
 
 
+
+/*SCRIPTS PARA A PÁGINA 2*/
+
+
+/*FUNÇÃO QUE SELECIONA UM QUIZ DA PÁGINA 1*/
 function selecionarQuiz (elemento) {
 
     console.log("clicou");
@@ -43,6 +48,7 @@ function selecionarQuiz (elemento) {
     requisicao.catch(erroAbrirQuiz);
 }
 
+/*SE A REQUISIÇÃO DO AXIOS DEU CERTO, EXECUTA ESSA FUNÇÃO*/
 function checarQuiz(resposta) {
     const codigo = resposta.status; //variável para visualizar o código de retorno que ta dando
     const objQuiz = resposta.data;
@@ -54,6 +60,7 @@ function checarQuiz(resposta) {
 }
 
 
+/*FUNÇÃO MALANDRA PARA MUDAR DE TELAS*/
 function esconderTela1 () {
     const pagina1 = document.querySelector(".pagina1");
     const pagina2 = document.querySelector(".pagina2");
@@ -63,6 +70,7 @@ function esconderTela1 () {
 
 }
 
+/*FUNÇÃO PARA RENDERIZAR A PÁGINA DO QUIZ (TELA 2)*/
 function abrirQuiz (vetor) {
     const pagina = document.querySelector(".pagina2");
 
@@ -117,6 +125,7 @@ function renderizarRespostas (perguntas,i,pagina) {
     return pagina.innerHTML;
 }
 
+/*CASO DÊ ALGUM PROBLEMA NA REQUISIÇÃO GET, ESSA FUNÇÃO RODA*/
 function erroAbrirQuiz(erro) {
     const codigo = erro.response.status;
     if (codigo !== 200) {
