@@ -122,7 +122,7 @@ function renderizarRespostas (perguntas,i) {
     for (let j=0; j < qtdRespostas; j++) {
         console.log(`resposta ${j}`);
         respostas += `
-            <div class="resposta">
+            <div class="resposta" onclick="selecionarResposta(this)">
                 <p class="escondido">${perguntas[i].answers[j].isCorrectAnswer}</p>
                 <img src="${perguntas[i].answers[j].image}" alt="">
                 <p>${perguntas[i].answers[j].text}</p>
@@ -144,7 +144,23 @@ function erroAbrirQuiz(erro) {
 
 
 function selecionarResposta(elemento) {
-    console.log(elemento.innerHTML);
     console.log(elemento);
+    const ehCorreta = elemento.querySelector(".escondido").innerHTML;
+    const outras = document.querySelectorAll("respostas")
+    console.log(outras);
+    console.log(ehCorreta);
+    console.log(typeof(ehCorreta));
+
+    if (ehCorreta === "true") {
+        outras.classList.add("opaco");
+        outras.classList.add("errou");
+        elemento.classList.add("acertou");
+        el.classList.remove("opaco");
+
+    } else if (ehCorreta === "false"){
+        elemento.classList.add("errou");
+    }
+
+    
 
 }
