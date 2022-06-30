@@ -27,7 +27,8 @@ function renderizarQuizzes(){
     }
 }
 
-renderizarQuizzes();
+
+//renderizarQuizzes();
 
 
 
@@ -72,7 +73,8 @@ function esconderTela1 () {
 
 /*FUNÇÃO PARA RENDERIZAR A PÁGINA DO QUIZ (TELA 2)*/
 function abrirQuiz (vetor) {
-    const pagina = document.querySelector(".pagina2");
+    const pagina = document.querySelector(".caixa-pergunta");
+    let capa = document.querySelector(".pagina2")
 
     let qtdPerguntas = vetor.questions.length;
     let perguntas = vetor.questions;
@@ -87,25 +89,23 @@ function abrirQuiz (vetor) {
     //     }
     // }
 
+    capa.innerHTML = "";
     pagina.innerHTML = "";
 
-    pagina.innerHTML = `
-        <div class="capa-quiz">
+    capa.innerHTML += `
+        <div class="capa-quiz" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${vetor.image})">
             <p>${vetor.title}</p>
         </div>
         `;
     for (let i=0; i < qtdPerguntas; i++) {
         
-
+        console.log("entrei no loop das perguntas");
         pagina.innerHTML += `
-        <div class="caixa-pergunta">
-            <div class="titulo-pergunta">
+            <div class="titulo-pergunta" style="background-color: ${perguntas[i].color}">
                 <h2>${perguntas[i].title}</h2>
             </div>
             ${renderizarRespostas(perguntas,i,pagina)}
-        </div>
         `
-        
     }
 }
 
@@ -113,9 +113,11 @@ function abrirQuiz (vetor) {
 function renderizarRespostas (perguntas,i,pagina) {
 
     for (let j=0; j < perguntas[i].answers.length; j++) {
+        console.log("entrei no loop das respostas")
         pagina.innerHTML += `
         <div class="respostas">
             <div class="resposta">
+                <p class="escondido">${perguntas[i].answers[j].isCorrectAnswer}</p>
                 <img src="${perguntas[i].answers[j].image}" alt="">
                 <p>${perguntas[i].answers[j].text}</p>
             </div>
@@ -133,4 +135,11 @@ function erroAbrirQuiz(erro) {
     }
     //renderiza mais uma vez os quizes para o usuário escolher.
     renderizarQuizzes();
+}
+
+
+function selecionarResposta(elemento) {
+    console.log(elemento.innerHTML);
+    console.log(elemento);
+
 }
