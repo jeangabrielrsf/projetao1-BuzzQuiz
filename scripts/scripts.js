@@ -1,4 +1,4 @@
-const urlAPI = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/";
+const urlAPI = "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/";
 let quizes = []; 
 
 const promessa = axios.get(urlAPI);
@@ -39,8 +39,6 @@ function renderizarQuizzes(){
 /*FUNÇÃO QUE SELECIONA UM QUIZ DA PÁGINA 1*/
 function selecionarQuiz (elemento) {
 
-    console.log("clicou");
-    console.log(elemento.querySelector(".id-quiz").innerHTML);
     quizID = elemento.querySelector(".id-quiz").innerHTML;
 
     const requisicao = axios.get(`${urlAPI}${quizID}`);
@@ -55,9 +53,10 @@ function checarQuiz(resposta) {
     const objQuiz = resposta.data;
     console.log(codigo);
     console.log(objQuiz);
-
-    esconderTela1();
-    abrirQuiz(objQuiz);
+    if (codigo === 200) {
+        esconderTela1();
+        abrirQuiz(objQuiz);
+    }
 }
 
 
@@ -73,12 +72,12 @@ function esconderTela1 () {
 
 /*FUNÇÃO PARA RENDERIZAR A PÁGINA DO QUIZ (TELA 2)*/
 function abrirQuiz (vetor) {
-    const pagina = document.querySelector(".caixa-pergunta");
+    const pagina = document.querySelector(".pagina2 .caixa-pergunta");
     let capa = document.querySelector(".pagina2")
 
     let qtdPerguntas = vetor.questions.length;
     let perguntas = vetor.questions;
-    console.log(perguntas);
+    
     console.log(`quantidade de perguntas: ${qtdPerguntas}`);
 
 
@@ -99,32 +98,38 @@ function abrirQuiz (vetor) {
         `;
     for (let i=0; i < qtdPerguntas; i++) {
         
-        console.log("entrei no loop das perguntas");
+        console.log(`pergunta ${i}`);
         pagina.innerHTML += `
-            <div class="titulo-pergunta" style="background-color: ${perguntas[i].color}">
-                <h2>${perguntas[i].title}</h2>
+            <div class="caixa-pergunta">
+                <div class="titulo-pergunta" style="background-color: ${perguntas[i].color}">
+                    <h2>${perguntas[i].title}</h2>
+                </div>
+                <div class="respostas">
+                    ${renderizarRespostas(perguntas,i)}
+                </div>
             </div>
-            ${renderizarRespostas(perguntas,i,pagina)}
-        `
+        `;
     }
+    capa.innerHTML += pagina.innerHTML;
 }
 
 
-function renderizarRespostas (perguntas,i,pagina) {
-
-    for (let j=0; j < perguntas[i].answers.length; j++) {
-        console.log("entrei no loop das respostas")
-        pagina.innerHTML += `
-        <div class="respostas">
+function renderizarRespostas (perguntas,i) {
+    let respostas = "";
+    console.log(respostas);
+    let qtdRespostas = perguntas[i].answers.length;
+    console.log(`quantidade de respostas: ${qtdRespostas}`);
+    for (let j=0; j < qtdRespostas; j++) {
+        console.log(`resposta ${j}`);
+        respostas += `
             <div class="resposta">
                 <p class="escondido">${perguntas[i].answers[j].isCorrectAnswer}</p>
                 <img src="${perguntas[i].answers[j].image}" alt="">
                 <p>${perguntas[i].answers[j].text}</p>
             </div>
-        </div>
-    `
+        `;
     }
-    return pagina.innerHTML;
+    return respostas;
 }
 
 /*CASO DÊ ALGUM PROBLEMA NA REQUISIÇÃO GET, ESSA FUNÇÃO RODA*/
