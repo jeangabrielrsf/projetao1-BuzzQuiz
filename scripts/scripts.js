@@ -115,11 +115,22 @@ function abrirQuiz (vetor) {
 }
 
 
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+
+
 function renderizarRespostas (perguntas,i) {
     let respostas = "";
     console.log(respostas);
     let qtdRespostas = perguntas[i].answers.length;
     console.log(`quantidade de respostas: ${qtdRespostas}`);
+    perguntas[i].answers.sort(shuffleArray(perguntas[i].answers));
     for (let j=0; j < qtdRespostas; j++) {
         console.log(`resposta ${j}`);
         respostas += `
