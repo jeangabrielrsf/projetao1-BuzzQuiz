@@ -146,22 +146,75 @@ function erroAbrirQuiz(erro) {
 
 function selecionarResposta(elemento) {
     console.log(elemento);
-    const ehCorreta = elemento.querySelector(".escondido").innerHTML;
-    const outras = document.querySelectorAll("respostas")
-    console.log(outras);
+    let ehCorreta = elemento.querySelector(".escondido").innerHTML;
+    let anterior = elemento.previousElementSibling;
+    let proxima = elemento.nextElementSibling;
     console.log(ehCorreta);
-    console.log(typeof(ehCorreta));
-
-    if (ehCorreta === "true") {
-        outras.classList.add("opaco");
-        outras.classList.add("errou");
-        elemento.classList.add("acertou");
-        el.classList.remove("opaco");
-
-    } else if (ehCorreta === "false"){
-        elemento.classList.add("errou");
-    }
+    console.log(`anterior: ${anterior}`);
+    console.log(`próxima: ${proxima}`);
 
     
+    
+    if (ehCorreta === "true") { /*se ele acertou*/
+        elemento.classList.add("acertou");
+        if (proxima !== null) {
+            while (proxima !== null)  {
+                console.log(proxima);
+                if(!proxima.classList.contains("opaco")) {
+                    proxima.classList.add("opaco");
+                }
+                if(!proxima.classList.contains("errou")) {
+                    proxima.classList.add("errou");
+                }
+                proxima = proxima.nextElementSibling;
+            }
+        }
+        if (anterior !== null) {
+            while(anterior !== null) {
+                console.log(anterior);
+                if (!anterior.classList.contains("opaco")) {
+                    anterior.classList.add("opaco");
+                }
+                if (!anterior.classList.contains("errou")) {
+                    anterior.classList.add("errou");
+                }
+                anterior = anterior.previousElementSibling;
+            }
+        }
+
+    } else { /*se ele errou a resposta*/
+        elemento.classList.add("errou");
+        if (proxima !== null) {
+            while (proxima !== null)  {
+                if(!proxima.classList.contains("opaco")) {
+                    proxima.classList.add("opaco");
+                
+                    ehCorreta = proxima.querySelector(".escondido").innerHTML;
+                    console.log(ehCorreta);
+                    if(ehCorreta === "true") {
+                        proxima.classList.add("acertou");
+                    } else {
+                        proxima.classList.add("errou");
+                    }
+                }
+                proxima = proxima.nextElementSibling;
+            }
+        }
+        if (anterior !== null) {
+            while(anterior !== null) {
+                if (!anterior.classList.contains("opaco")) {
+                    anterior.classList.add("opaco");
+                    
+                    ehCorreta = anterior.querySelector(".escondido").innerHTML;
+                    if (ehCorreta === "true") {
+                        anterior.classList.add("acertou");
+                    } else {
+                        anterior.classList.add("errou");
+                    }
+                }
+                anterior = anterior.previousElementSibling;
+            }
+        }
+    }
 
 }
