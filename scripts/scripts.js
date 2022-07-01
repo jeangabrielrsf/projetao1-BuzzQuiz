@@ -147,7 +147,7 @@ function erroAbrirQuiz(erro) {
 function selecionarResposta(elemento) {
     console.log(elemento);
     const ehCorreta = elemento.querySelector(".escondido").innerHTML;
-    const outras = document.querySelectorAll("respostas")
+    const outras = document.querySelectorAll(".respostas")
     console.log(outras);
     console.log(ehCorreta);
     console.log(typeof(ehCorreta));
@@ -161,7 +161,5 @@ function selecionarResposta(elemento) {
     } else if (ehCorreta === "false"){
         elemento.classList.add("errou");
     }
-
-    
 
 }

@@ -157,11 +157,6 @@ body {
 }
 
 
-.quizz img{
-    height: 100%;
-    width: 100%;
-    border-radius: 5px;
-}
 
 .quizz div{
     position: absolute;
@@ -294,3 +289,167 @@ body {
     display: none;
 }
 
+/* PAGINA 3 (PARTE 1) */
+
+
+.pagina3{
+}
+
+.grade-1{
+    margin: 140px 35% 0px;
+    
+}
+
+.grade-1 h3{
+    margin: 20px  30% 30px;
+    width: 300px;
+    font-weight: 700;
+    font-size: 23px;
+}
+
+.cx-dados-quizz{
+    height: 256px;
+    width: 600px;
+    margin: 50px 0px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.cx-dados-quizz input{
+    width: 564px;
+    height: 46px;
+    border-radius: 5px;
+    border: 1px solid #D1D1D1;
+    padding-left: 10px;
+    color: #BABABA;
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.prosseguir-criar-perguntas{
+    height: 54px;
+    width: 369px;
+    background-color: #EC362D;
+    border-radius: 15px;
+    margin: 100px auto 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.prosseguir-criar-perguntas{
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 25px;
+    color: #FFF5F4;
+}
+
+.grade-2{
+    width: 600px;
+    margin: 150px auto;
+    
+
+}
+
+.grade-2 h3{
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 27px;
+    margin: 20px 30% 70px;
+}
+
+.grade-2 h4{
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    margin-bottom: 15px;
+}
+
+.pergunta{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 190px;
+}
+
+.grade-2 input{ 
+    width: 564px;
+    height: 46px;
+    border-radius: 5px;
+    border: 1px solid #D1D1D1;
+    padding-left: 10px;
+    color: #BABABA;
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.resposta-correta{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 190px;
+}
+
+.resposta-incorreta{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.incorreta{
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.grade-3{
+    width: 600px;
+    margin: 150px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.grade-3 h3{
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 27px;
+    margin-bottom: 80px;
+}
+
+.acessar-quizz p{
+    color: #ffffff;
+    font-size: 21px;
+    font-weight: 400;
+}
+
+.acessar-quizz{
+    width: 220.32px;
+    height: 44px;
+    border-radius: 15px;
+    background-color: #EC362D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 70px auto 30px;
+}
+
+.voltar-pra-home{
+    width: 220.32px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.voltar-pra-home p{
+    font-size: 21px;
+    font-weight: 400;
+    color: #818181;
+}
