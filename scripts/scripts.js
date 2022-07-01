@@ -164,7 +164,21 @@ function selecionarResposta(elemento) {
     console.log(`anterior: ${anterior}`);
     console.log(`próxima: ${proxima}`);
 
-    
+
+    if (anterior === null) {
+        if (proxima.classList.contains("opaco")) {
+            alert("é o primeiro e já tem");
+            return;
+        }
+    } else if (proxima === null) {
+        if (anterior.classList.contains("opaco")) {
+            alert("é o último e já tem ");
+            return;
+        }
+    } else if (proxima.classList.contains("opaco") || anterior.classList.contains("opaco")) {
+        console.log("já tem");
+        return;
+    }
     
     if (ehCorreta === "true") { /*se ele acertou*/
         elemento.classList.add("acertou");
@@ -180,6 +194,7 @@ function selecionarResposta(elemento) {
                 proxima = proxima.nextElementSibling;
             }
         }
+
         if (anterior !== null) {
             while(anterior !== null) {
                 console.log(anterior);
@@ -193,39 +208,43 @@ function selecionarResposta(elemento) {
             }
         }
 
-    } else { /*se ele errou a resposta*/
-        elemento.classList.add("errou");
-        if (proxima !== null) {
-            while (proxima !== null)  {
-                if(!proxima.classList.contains("opaco")) {
-                    proxima.classList.add("opaco");
-                
-                    ehCorreta = proxima.querySelector(".escondido").innerHTML;
-                    console.log(ehCorreta);
-                    if(ehCorreta === "true") {
-                        proxima.classList.add("acertou");
-                    } else {
-                        proxima.classList.add("errou");
-                    }
-                }
-                proxima = proxima.nextElementSibling;
-            }
-        }
-        if (anterior !== null) {
-            while(anterior !== null) {
-                if (!anterior.classList.contains("opaco")) {
-                    anterior.classList.add("opaco");
+        } else { /*se ele errou a resposta*/
+            elemento.classList.add("errou");
+            if (proxima !== null) {
+                while (proxima !== null)  {
+                    if(!proxima.classList.contains("opaco")) {
+                        proxima.classList.add("opaco");
                     
-                    ehCorreta = anterior.querySelector(".escondido").innerHTML;
-                    if (ehCorreta === "true") {
-                        anterior.classList.add("acertou");
-                    } else {
-                        anterior.classList.add("errou");
+                        ehCorreta = proxima.querySelector(".escondido").innerHTML;
+                        console.log(ehCorreta);
+                        if(ehCorreta === "true") {
+                            proxima.classList.add("acertou");
+                        } else {
+                            proxima.classList.add("errou");
+                        }
                     }
+                    proxima = proxima.nextElementSibling;
                 }
-                anterior = anterior.previousElementSibling;
+            }
+            if (anterior !== null) {
+                while(anterior !== null) {
+                    if (!anterior.classList.contains("opaco")) {
+                        anterior.classList.add("opaco");
+                        
+                        ehCorreta = anterior.querySelector(".escondido").innerHTML;
+                        if (ehCorreta === "true") {
+                            anterior.classList.add("acertou");
+                        } else {
+                            anterior.classList.add("errou");
+                        }
+                    }
+                    anterior = anterior.previousElementSibling;
+                }
             }
         }
-    }
+}
 
+
+function scrollarPagina () {
+    /* só deus sabe farei isso */
 }

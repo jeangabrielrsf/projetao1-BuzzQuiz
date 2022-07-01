@@ -281,6 +281,10 @@ body {
     opacity: 0.3;
 }
 
+.clicado {
+    opacity: 1;
+}
+
 .errou p{
     color: #FF4B4B;
 }
@@ -293,4 +297,5 @@ body {
 .escondido {
     display: none;
 }
+
 
