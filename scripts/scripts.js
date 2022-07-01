@@ -157,7 +157,6 @@ function erroAbrirQuiz(erro) {
 
 function selecionarResposta(elemento) {
     console.log(elemento);
-    const ehCorreta = elemento.querySelector(".escondido").innerHTML;
     const outras = document.querySelectorAll(".respostas")
     console.log(outras);
     let ehCorreta = elemento.querySelector(".escondido").innerHTML;
@@ -253,3 +252,4 @@ function selecionarResposta(elemento) {
 function scrollarPagina () {
     /* só deus sabe farei isso */
 }
+
