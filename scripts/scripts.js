@@ -18,8 +18,7 @@ function renderizarQuizzes(){
     for(let i = 0; i < 6; i++){
 
         ul.innerHTML += `
-            <div class="quizz" onclick="selecionarQuiz(this)">
-                <img src="${quizes[i].image}">
+            <div class="quizz" style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(${quizes[i].image})" onclick="selecionarQuiz(this)">
                 <p class="id-quiz">${quizes[i].id}</p>
                 <div><h3>${quizes[i].title}</h3></div>
             </div>
@@ -46,6 +45,8 @@ function selecionarQuiz (elemento) {
     requisicao.then (checarQuiz);
     requisicao.catch(erroAbrirQuiz);
 }
+
+
 
 /*SE A REQUISIÇÃO DO AXIOS DEU CERTO, EXECUTA ESSA FUNÇÃO*/
 function checarQuiz(resposta) {
