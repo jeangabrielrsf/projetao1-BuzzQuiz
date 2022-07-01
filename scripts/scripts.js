@@ -27,7 +27,7 @@ function renderizarQuizzes(){
 }
 
 
-//renderizarQuizzes();
+renderizarQuizzes();
 
 
 
@@ -52,8 +52,7 @@ function selecionarQuiz (elemento) {
 function checarQuiz(resposta) {
     const codigo = resposta.status; //variável para visualizar o código de retorno que ta dando
     const objQuiz = resposta.data;
-    console.log(codigo);
-    console.log(objQuiz);
+    
     if (codigo === 200) {
         esconderTela1();
         abrirQuiz(objQuiz);
@@ -79,7 +78,7 @@ function abrirQuiz (vetor) {
     let qtdPerguntas = vetor.questions.length;
     let perguntas = vetor.questions;
     
-    console.log(`quantidade de perguntas: ${qtdPerguntas}`);
+    
 
 
     //RASCUNHO DE COMO É O FOR
@@ -99,7 +98,7 @@ function abrirQuiz (vetor) {
         `;
     for (let i=0; i < qtdPerguntas; i++) {
         
-        console.log(`pergunta ${i}`);
+        //console.log(`pergunta ${i}`);
         pagina.innerHTML += `
             <div class="caixa-pergunta">
                 <div class="titulo-pergunta" style="background-color: ${perguntas[i].color}">
@@ -115,7 +114,7 @@ function abrirQuiz (vetor) {
 }
 
 
-
+/* FUNÇAO PARA EMBARALHAR UM VETOR */
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -124,15 +123,17 @@ function shuffleArray(array) {
 }
 
 
+/* FUNÇAO PARA RENDERIZAR AS RESPOSTAS DE UMA PERGUNTA.
+   RECEBE COMO PARÂMETRO UM VETOR E O ÍNDICE ATUAL DELE. */
 
 function renderizarRespostas (perguntas,i) {
     let respostas = "";
-    console.log(respostas);
+    //console.log(respostas);
     let qtdRespostas = perguntas[i].answers.length;
-    console.log(`quantidade de respostas: ${qtdRespostas}`);
+    //console.log(`quantidade de respostas: ${qtdRespostas}`);
     perguntas[i].answers.sort(shuffleArray(perguntas[i].answers));
     for (let j=0; j < qtdRespostas; j++) {
-        console.log(`resposta ${j}`);
+        //console.log(`resposta ${j}`);
         respostas += `
             <div class="resposta" onclick="selecionarResposta(this)">
                 <p class="escondido">${perguntas[i].answers[j].isCorrectAnswer}</p>
@@ -155,38 +156,40 @@ function erroAbrirQuiz(erro) {
 }
 
 
+/*FUNÇÃO PARA ESCOLHER UMA RESPOSTA CLICADA.
+PODE MELHORAR MUITO, ENTÃO ESSA É A VERSÃO 1.0 */
 function selecionarResposta(elemento) {
-    console.log(elemento);
-    const ehCorreta = elemento.querySelector(".escondido").innerHTML;
-    const outras = document.querySelectorAll(".respostas")
-    console.log(outras);
+    //console.log(elemento);
     let ehCorreta = elemento.querySelector(".escondido").innerHTML;
     let anterior = elemento.previousElementSibling;
     let proxima = elemento.nextElementSibling;
-    console.log(ehCorreta);
-    console.log(`anterior: ${anterior}`);
-    console.log(`próxima: ${proxima}`);
+    //console.log(ehCorreta);
+    //console.log(`anterior: ${anterior}`);
+    //console.log(`próxima: ${proxima}`);
 
 
+    //se ele for o primeiro da lista e a próxima resposta já tiver a classe opaco : faz nada
     if (anterior === null) {
-        if (proxima.classList.contains("opaco")) {
-            alert("é o primeiro e já tem");
+        if (proxima.classList.contains("opaco") || proxima.classList.contains("clicado")) {
+            console.log("é o primeiro e já tem");
             return;
         }
     } else if (proxima === null) {
-        if (anterior.classList.contains("opaco")) {
-            alert("é o último e já tem ");
+        //se ele for o último da lista e resposta anterior já tiver a classe opaco : faz nada.
+        if (anterior.classList.contains("opaco") || anterior.classList.contains("clicado")) {
+            console.log("é o último e já tem ");
             return;
         }
     } else if (proxima.classList.contains("opaco") || anterior.classList.contains("opaco")) {
+        //se o elemento estiver no meio e ou a anterior ou a próxima resposta já tem opaco: faz nada.
         console.log("já tem");
         return;
     }
 
-}
     
     if (ehCorreta === "true") { /*se ele acertou*/
         elemento.classList.add("acertou");
+        elemento.classList.add("clicado");
         if (proxima !== null) {
             while (proxima !== null)  {
                 console.log(proxima);
@@ -211,45 +214,61 @@ function selecionarResposta(elemento) {
                 }
                 anterior = anterior.previousElementSibling;
             }
+            
         }
 
-        } else { /*se ele errou a resposta*/
-            elemento.classList.add("errou");
-            if (proxima !== null) {
-                while (proxima !== null)  {
-                    if(!proxima.classList.contains("opaco")) {
-                        proxima.classList.add("opaco");
+    } else { /*se ele errou a resposta*/
+        elemento.classList.add("errou");
+        elemento.classList.add("clicado");
+        if (proxima !== null) {
+            while (proxima !== null)  {
+                if(!proxima.classList.contains("opaco")) {
+                    proxima.classList.add("opaco");
+                
+                    ehCorreta = proxima.querySelector(".escondido").innerHTML;
+                    console.log(ehCorreta);
+                    if(ehCorreta === "true") {
+                        proxima.classList.add("acertou");
+                    } else {
+                        proxima.classList.add("errou");
+                    }
+                }
+                proxima = proxima.nextElementSibling;
+            }
+        }
+        if (anterior !== null) {
+            while(anterior !== null) {
+                if (!anterior.classList.contains("opaco")) {
+                    anterior.classList.add("opaco");
                     
-                        ehCorreta = proxima.querySelector(".escondido").innerHTML;
-                        console.log(ehCorreta);
-                        if(ehCorreta === "true") {
-                            proxima.classList.add("acertou");
-                        } else {
-                            proxima.classList.add("errou");
-                        }
+                    ehCorreta = anterior.querySelector(".escondido").innerHTML;
+                    if (ehCorreta === "true") {
+                        anterior.classList.add("acertou");
+                    } else {
+                        anterior.classList.add("errou");
                     }
-                    proxima = proxima.nextElementSibling;
                 }
-            }
-            if (anterior !== null) {
-                while(anterior !== null) {
-                    if (!anterior.classList.contains("opaco")) {
-                        anterior.classList.add("opaco");
-                        
-                        ehCorreta = anterior.querySelector(".escondido").innerHTML;
-                        if (ehCorreta === "true") {
-                            anterior.classList.add("acertou");
-                        } else {
-                            anterior.classList.add("errou");
-                        }
-                    }
-                    anterior = anterior.previousElementSibling;
-                }
+                anterior = anterior.previousElementSibling;
             }
         }
+    }
+
+    setTimeout(scrollarProxima(elemento),2000);
+}
 
 
-
-function scrollarPagina () {
+function scrollarProxima (elemento) {
     /* só deus sabe farei isso */
+    console.log("ENTREI NO SCROLLAR");
+    elementoPai = elemento.parentElement;
+    elementoVo = elementoPai.parentElement;
+
+    if (elementoVo === null) {
+        console.log("função scroll: não tem mais pergunta");
+        return;
+    } else {
+        console.log("tem próxima");
+        elementoVo.scrollIntoView(true);
+    }
+   
 }
