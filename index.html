@@ -105,7 +105,7 @@
             <div class="grade-1">  
                 <h3>Comece pelo começo</h3>
                 <div class="cx-dados-quizz">
-                    <input type="text" class="cx-input" placeholder="Título do seu quizz">
+                    <input type="text" class="cx-input" placeholder="Título do seu quizz" pattern="[A-Za-z].{1, 20}">
                     <input type="text" class="cx-input" placeholder="URL da imagem do seu quizz">
                     <input type="text" class="cx-input" placeholder="Quantidade de perguntas do quizz">
                     <input type="text" class="cx-input" placeholder="Quantidade de níveis do quizz">
@@ -118,13 +118,13 @@
                 <h3>Crie suas perguntas</h3>
                 <div class="pergunta">
                     <h4>Pergunta 1</h4>
-                    <input type="text" class="cx-input" placeholder="Texto da pergunta">
+                    <input type="text" class="cx-input" placeholder="Texto da pergunta" pattern="[A-Za-z].{20,65}">
                     <input type="text" class="cx-input" placeholder="Cor de fundo da pergunta">
                 </div>
                 <div class="resposta-correta">
                     <h4>Crie suas perguntas</h4>
                     <input type="text" class="cx-input" placeholder="Resposta incorreta">
-                    <input type="text" class="cx-input" placeholder="URL da imagem">
+                    <input type="url" class="cx-input" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
                 </div>
                 <div class="resposta-incorreta">
                     <h4>Respostas incorretas</h4>
