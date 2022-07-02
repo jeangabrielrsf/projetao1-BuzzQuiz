@@ -276,3 +276,37 @@ function scrollarProxima (elemento) {
    
 }
 
+function criarQuizz(){
+    const pagina1 = document.querySelector('.pagina1');
+    const pagina3 = document.querySelector('.pagina3');
+
+    pagina1.classList.add("escondido");
+    pagina3.classList.remove("escondido");
+    
+}
+
+function enviaTituloQuizz(){
+    const grade1 = document.querySelector(".grade-1");
+    const grade2 = document.querySelector(".grade-2");
+
+    grade1.classList.add("escondido");
+    grade2.classList.remove("escondido");
+
+}
+
+function prosseguiPraCriarNiveis(){
+    const grade2 = document.querySelector(".grade-2");
+    const grade3 = document.querySelector(".grade-3");
+
+    grade2.classList.add("escondido");
+    grade3.classList.remove("escondido");
+
+}
+
+function voltarPraHome(){
+    const pagina3 = document.querySelector(".pagina3");
+    const pagina1 = document.querySelector(".pagina1");
+
+    pagina3.classList.add("escondido");
+    pagina1.classList.remove("escondido");
+}
