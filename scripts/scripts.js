@@ -27,7 +27,7 @@ function renderizarQuizzes(){
 }
 
 
-renderizarQuizzes();
+//renderizarQuizzes();
 
 
 
@@ -270,6 +270,12 @@ function selecionarResposta(elemento) {
                                 proxima.scrollIntoView(false);
                             }
                         },2000);
+}
+
+
+
+function mostrarFimQuizz() {
+    /*implementando*/
 }
 
 
