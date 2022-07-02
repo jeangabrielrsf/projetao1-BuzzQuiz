@@ -15,7 +15,7 @@ function renderizarQuizzes(){
 
     const ul = document.querySelector('.quizzes');
 
-    for(let i = 0; i < 6; i++){
+    for(let i = 0; i < 12; i++){
 
         ul.innerHTML += `
             <div class="quizz" style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(${quizes[i].image})" onclick="selecionarQuiz(this)">
@@ -27,7 +27,7 @@ function renderizarQuizzes(){
 }
 
 
-renderizarQuizzes();
+//renderizarQuizzes();
 
 
 
@@ -256,25 +256,29 @@ function selecionarResposta(elemento) {
         }
     }
 
-    setTimeout(scrollarProxima(elemento),2000);
+    //criei uma função anônima para scrollar a tela depois de dois segundos.
+    setTimeout(function () {
+                            elementoPai = elemento.parentElement;
+                            elementoVo = elementoPai.parentElement;
+                            proxima = elementoVo.nextElementSibling;
+
+                            if (proxima === null) {
+                                console.log("função scroll: não tem mais pergunta");
+                                return;
+                            } else {
+                                console.log("tem próxima");
+                                proxima.scrollIntoView(false);
+                            }
+                        },2000);
 }
 
 
-function scrollarProxima (elemento) {
-    /* só deus sabe farei isso */
-    console.log("ENTREI NO SCROLLAR");
-    elementoPai = elemento.parentElement;
-    elementoVo = elementoPai.parentElement;
 
-    if (elementoVo === null) {
-        console.log("função scroll: não tem mais pergunta");
-        return;
-    } else {
-        console.log("tem próxima");
-        elementoVo.scrollIntoView(true);
-    }
-   
+function mostrarFimQuizz() {
+    /*implementando*/
 }
+
+
 
 function criarQuizz(){
     const pagina1 = document.querySelector('.pagina1');

@@ -292,6 +292,89 @@ body {
     display: none;
 }
 
+
+.fim-quizz {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width:759px;
+    height: 430px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+.titulo-fim-quizz {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EC362D;
+    width: 95%;
+    height: 100px;
+}
+
+.titulo-fim-quizz p{
+    color: #FFFFFF;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 26.95px;
+}
+
+.caixa-texto-fim {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    padding: 15px 0px;
+}
+
+.imagem-fim {
+    width: 364px;
+    height: 273px;
+    margin-right: 10px;
+}
+
+.imagem-fim img {
+    object-fit: fill;
+    width: 364px;
+    height: 273px;
+}
+
+.texto-fim {
+    color: #484848;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 25px;
+}
+
+.botao-reiniciar {
+    margin-top: 50px;
+    background-color: #EC362D;
+    width: 260px;
+    height: 52px;
+    border-radius: 15px;
+    color:#FFF5F4 ;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 24.61px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.botao-voltar {
+    margin-top: 15px;
+    color: #818181;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 24.61px;
+    width: 220px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* PAGINA 3 (PARTE 1) */
 
 
