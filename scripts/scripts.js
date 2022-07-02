@@ -27,7 +27,7 @@ function renderizarQuizzes(){
 }
 
 
-//renderizarQuizzes();
+renderizarQuizzes();
 
 
 
@@ -267,7 +267,7 @@ function selecionarResposta(elemento) {
                                 return;
                             } else {
                                 console.log("tem próxima");
-                                proxima.scrollIntoView(false);
+                                proxima.scrollIntoView({block:"start", behavior:"smooth", inline:"nearest"});
                             }
                         },2000);
 }
