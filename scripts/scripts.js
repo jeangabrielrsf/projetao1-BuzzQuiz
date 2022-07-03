@@ -430,8 +430,6 @@ function quantidadePerguntas(){
     
     const numeroPerguntas = document.querySelector("input:nth-child(3)").value
     console.log(numeroPerguntas);
-
-    const numeroPerguntas = document.querySelector("input:nth-child(3)").value
 }
 
 // QUANTIDADE DE NÍVES A SEREM CRIADOS
@@ -610,7 +608,7 @@ function adicionandoRespostas(){
 
     quizesCriados[0][0][1].push({
         text: respostaIncorreta,
-        image: imageRespostaIncorreta
+        image: imageRespostaIncorreta,
         isCorrectAnswer: false
     });
 
