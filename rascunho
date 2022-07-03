@@ -1,0 +1,11 @@
+objquestions = {
+			title: "",
+			color: "",
+			answers: []
+}
+
+objanswers = {
+    text: "Texto da resposta 1",
+	image: "https://http.cat/411.jpg",
+	isCorrectAnswer: true
+}

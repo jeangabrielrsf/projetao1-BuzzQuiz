@@ -223,7 +223,7 @@ function calcularAcertos() {
         
     }
     renderizarFimQuizz(nivel);
-    mostrarFimQuizz();   
+    mostrarFimQuizz();  
 }
 
 
@@ -483,7 +483,7 @@ function finalizarQuizz() {
     const qtdNiveis = quantidadeNiveis();
     const gradeNiveis = document.querySelector(".grade-niveis");
     const grade3 = document.querySelector(".grade-3");
-    const nivel = document.querySelector(".nivel");
+    let nivel = document.querySelector(".nivel");
     let tituloNivel;
     let porcentagem;
     let urlNivel;
@@ -506,12 +506,14 @@ function finalizarQuizz() {
         objetoNivel.image = urlNivel;
         objetoNivel.text = textoNivel;
 
-        quizzEnviado.levels[i].push(objetoNivel);
+        console.log(objetoNivel);
+        quizzEnviado.levels.push(objetoNivel);
         nivel = nivel.nextElementSibling;
     }
     
     gradeNiveis.classList.add("escondido");
     grade3.classList.remove("escondido");
+    console.log(quizzEnviado);
 }
 
 function voltarPraHome(){
