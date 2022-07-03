@@ -1,5 +1,5 @@
 const urlAPI = "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/";
-let quizes = []; 
+let quizes = quizesCriados = []; 
 let escolhido; //variável para guardar o objeto de um quiz.
 let erros = 0;
 let acertos = 0;
@@ -8,70 +8,8 @@ let resultado = 0;
 let quizzEnviado = {
 	title: "",
 	image: "",
-	questions: [
-		{
-			title: "Título da pergunta 1",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-				{
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		},
-		{
-			title: "Título da pergunta 2",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-				{
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		},
-		{
-			title: "Título da pergunta 3",
-			color: "#123456",
-			answers: [
-				{
-					text: "Texto da resposta 1",
-					image: "https://http.cat/411.jpg",
-					isCorrectAnswer: true
-				},
-				{
-					text: "Texto da resposta 2",
-					image: "https://http.cat/412.jpg",
-					isCorrectAnswer: false
-				}
-			]
-		}
-	],
-	levels: [
-		{
-			title: "Título do nível 1",
-			image: "https://http.cat/411.jpg",
-			text: "Descrição do nível 1",
-			minValue: 0
-		},
-		{
-			title: "Título do nível 2",
-			image: "https://http.cat/412.jpg",
-			text: "Descrição do nível 2",
-			minValue: 50
-		}
-	]
+	questions: [],
+	levels: []
 }
 
 const promessa = axios.get(urlAPI);
@@ -463,18 +401,42 @@ function mostrarFimQuizz() {
 
 
 
-
-/* PÁGINA 3 ABAIXO*/
-
+// FUNÇÃO PARA POSTAR TITULO E A IMAGEM DO QUIZZ
 function criarQuizz(){
     const pagina1 = document.querySelector('.pagina1');
     const pagina3 = document.querySelector('.pagina3');
 
     pagina1.classList.add("escondido");
     pagina3.classList.remove("escondido");
-    
+    criandoQuizz();
     
 }
+
+function postarTituloQuiz(){
+
+    const tituloQuizz = document.querySelector("input:nth-child(1)").value;
+    const imagemQuizz = document.querySelector("input:nth-child(2)").value;
+
+    quizesCriados.push({
+        title: tituloQuizz,
+        image: imagemQuizz
+    });
+    console.log(quizesCriados);
+}
+
+// QUANTIDADE DE PERGUNTAS A SEREM CRIADAS
+function quantidadePerguntas(){
+
+    const numeroPerguntas = document.querySelector("input:nth-child(3)").value
+}
+
+// QUANTIDADE DE NÍVES A SEREM CRIADOS
+function quantidadeNiveis(){
+
+    const numeroNiveis = document.querySelector("input:nth-child(4)").value
+    return numeroNiveis;
+}
+
 
 function enviaTituloQuizz(){
     const grade1 = document.querySelector(".grade-1");
@@ -482,26 +444,74 @@ function enviaTituloQuizz(){
 
     grade1.classList.add("escondido");
     grade2.classList.remove("escondido");
-
+    postarTituloQuiz()
 }
 
 function prosseguiPraCriarNiveis(){
     const grade2 = document.querySelector(".grade-2");
-    const gradeNiveis = document.querySelector(".grade-niveis");
+    let gradeNiveis = document.querySelector(".grade-niveis");
+    let qtdNiveis = quantidadeNiveis();
 
+    gradeNiveis.innerHTML = "";
+
+    for (let i=0; i < qtdNiveis; i++) {
+        gradeNiveis.innerHTML += `
+            <div class="nivel">
+                <form>
+                    <h3>Nível ${i+1}</h3>
+                    <input type="text" class="titulo-nivel" placeholder="Título do nível" required>
+                    <input type="number" class="porcentagem-nivel" placeholder="% de acerto mínima" required>
+                    <input type="url" class="url-nivel" placeholder="URL da imagem do nível" required>
+                    <input type="text" class="descricao-nivel" placeholder="Descrição do nível" required>
+                </form>
+            </div>
+        `;
+    }
+
+    gradeNiveis.innerHTML += `
+        <div class="botao-finalizar" onclick="finalizarQuizz()">
+            <p>Finalizar Quizz</p>
+        </div>
+    `;
     grade2.classList.add("escondido");
     gradeNiveis.classList.remove("escondido");
-
 }
 
+
+
 function finalizarQuizz() {
+    const qtdNiveis = quantidadeNiveis();
     const gradeNiveis = document.querySelector(".grade-niveis");
-    const grade3 = document.querySelector(".grade3");
-    let tituloNivel = document.querySelector(".grade-niveis .titulo-nivel").value;
-    console.log(dataForm);
-    quizzEnviado.levels[i].ti
-    // gradeNiveis.classList.add("escondido");
-    // grade3.classList.remove("escondido");
+    const grade3 = document.querySelector(".grade-3");
+    const nivel = document.querySelector(".nivel");
+    let tituloNivel;
+    let porcentagem;
+    let urlNivel;
+    let textoNivel;
+    let objetoNivel = {
+        title: "",
+        image: "",
+        text: "",
+        minValue: 0
+    };
+
+    for (let i=0; i < qtdNiveis; i++) {
+        tituloNivel = nivel.querySelector(".titulo-nivel").value;
+        porcentagem = nivel.querySelector(".porcentagem-nivel").value;
+        urlNivel = nivel.querySelector(".url-nivel").value;
+        textoNivel = nivel.querySelector(".descricao-nivel").value;
+
+        objetoNivel.title = tituloNivel;
+        objetoNivel.minValue = porcentagem;
+        objetoNivel.image = urlNivel;
+        objetoNivel.text = textoNivel;
+
+        quizzEnviado.levels[i].push(objetoNivel);
+        nivel = nivel.nextElementSibling;
+    }
+    
+    gradeNiveis.classList.add("escondido");
+    grade3.classList.remove("escondido");
 }
 
 function voltarPraHome(){
@@ -510,4 +520,21 @@ function voltarPraHome(){
 
     pagina3.classList.add("escondido");
     pagina1.classList.remove("escondido");
+}
+
+function criandoQuizz(){
+
+    const infoQuizz = document.querySelector(".cx-dados-quizz");
+
+    infoQuizz.innerHTML = `
+    <form>
+    <input type="text" class="cx-input 1" placeholder="Título do seu quizz" pattern="[A-Za-z].{1,20}">
+    <input type="text" class="cx-input 2" placeholder="URL da imagem do seu quizz">
+    <input type="text" class="cx-input 3" placeholder="Quantidade de perguntas do quizz">
+    <input type="text" class="cx-input 4" placeholder="Quantidade de níveis do quizz">
+    </form>
+    `;
+
+
+
 }
