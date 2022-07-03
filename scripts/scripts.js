@@ -416,6 +416,7 @@ function postarTituloQuiz(){
 
     const tituloQuizz = document.querySelector("input:nth-child(1)").value;
     const imagemQuizz = document.querySelector("input:nth-child(2)").value;
+    
 
     quizesCriados.push({
         title: tituloQuizz,
@@ -426,6 +427,9 @@ function postarTituloQuiz(){
 
 // QUANTIDADE DE PERGUNTAS A SEREM CRIADAS
 function quantidadePerguntas(){
+    
+    const numeroPerguntas = document.querySelector("input:nth-child(3)").value
+    console.log(numeroPerguntas);
 
     const numeroPerguntas = document.querySelector("input:nth-child(3)").value
 }
@@ -434,6 +438,7 @@ function quantidadePerguntas(){
 function quantidadeNiveis(){
 
     const numeroNiveis = document.querySelector("input:nth-child(4)").value
+    console.log(numeroNiveis);
     return numeroNiveis;
 }
 
@@ -444,7 +449,8 @@ function enviaTituloQuizz(){
 
     grade1.classList.add("escondido");
     grade2.classList.remove("escondido");
-    postarTituloQuiz()
+    postarTituloQuiz();
+    criarPerguntas();
 }
 
 function prosseguiPraCriarNiveis(){
@@ -474,6 +480,9 @@ function prosseguiPraCriarNiveis(){
         </div>
     `;
     grade2.classList.add("escondido");
+    grade3.classList.remove("escondido");
+    adicionandoRespostas();
+
     gradeNiveis.classList.remove("escondido");
 }
 
@@ -523,20 +532,107 @@ function voltarPraHome(){
     pagina3.classList.add("escondido");
     pagina1.classList.remove("escondido");
 }
-
+// grade1
 function criandoQuizz(){
 
     const infoQuizz = document.querySelector(".cx-dados-quizz");
-
+    
     infoQuizz.innerHTML = `
     <form>
-    <input type="text" class="cx-input 1" placeholder="Título do seu quizz" pattern="[A-Za-z].{1,20}">
-    <input type="text" class="cx-input 2" placeholder="URL da imagem do seu quizz">
-    <input type="text" class="cx-input 3" placeholder="Quantidade de perguntas do quizz">
-    <input type="text" class="cx-input 4" placeholder="Quantidade de níveis do quizz">
+    <input type="text" class="cx-input" placeholder="Título do seu quizz" pattern="[A-Za-z].{1,20}">
+    <input type="text" class="cx-input" placeholder="URL da imagem do seu quizz">
+    <input type="text" class="cx-input" placeholder="Quantidade de perguntas do quizz">
+    <input type="text" class="cx-input" placeholder="Quantidade de níveis do quizz">
+    </form>
+    `;
+
+}
+
+function criarPerguntas(){
+
+    const perguntaQuizz = document.querySelector(".pergunta");
+
+    perguntaQuizz.innerHTML = `
+    <form>
+    <input type="text" class="cx-input" placeholder="Texto da pergunta" pattern="[A-Za-z].{20,65}">
+    <input type="color" class="cx-input" placeholder="Cor de fundo da pergunta">
+    </form>
+    `;
+
+    const respostaTrue = document.querySelector(".resposta-correta")
+
+    respostaTrue.innerHTML += `
+    <form>
+    <input type="text" class="cx-input" placeholder="Resposta correta">
+    <input type="url" class="cx-input" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
     </form>
     `;
 
 
 
+    const respostaFalse = document.querySelector(".resposta-incorreta")
+
+    for(let i = 0; i < 3; i ++){
+        respostaFalse.innerHTML += `    
+        <form>
+        <input type="text" class="cx-input" placeholder="Resposta incorreta">
+        <input type="url" class="cx-input" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
+        </form>
+        `;
+    
+    }
+  
+
+}
+
+    
+function adicionandoRespostas(){
+
+    const perguntadoQuizz = document.querySelector("input:nth-child(5)").value;
+    const corQuizz = document.querySelector("input:nth-child(6)").value;
+    
+    quizesCriados[0][0].push({
+        title: perguntadoQuizz,
+        image: corQuizz
+    });
+    
+    const respostaCorreta = document.querySelector("input:nth-child(7)").value;
+    const imageRespostaCorreta = document.querySelector("input:nth-child(8)").value;
+
+    quizesCriados[0][0][0].push({
+        text: respostaCorreta,
+        image: imageRespostaCorreta,
+        isCorrectAnswer: true
+    });
+
+    const respostaIncorreta = document.querySelector("input:nth-child(9)").value;
+    const imageRespostaIncorreta = document.querySelector("input:nth-child(10)").value;
+
+    quizesCriados[0][0][1].push({
+        text: respostaIncorreta,
+        image: imageRespostaIncorreta
+        isCorrectAnswer: false
+    });
+
+    const respostaIncorreta2 = document.querySelector("input:nth-child(11)").value;
+    const imageRespostaIncorreta2 = document.querySelector("input:nth-child(12)").value;
+
+    if((respostaIncorreta2 !== "") && (imageRespostaIncorreta2 !== "")){
+        quizesCriados[0][0][2].push({
+            text: respostaIncorreta2,
+            image: imageRespostaIncorreta2,
+            isCorrectAnswer: false
+        });
+    };
+
+    const respostaIncorreta3 = document.querySelector("input:nth-child(13)").value;
+    const imageRespostaIncorreta3 = document.querySelector("input:nth-child(14)").value;
+
+    if((respostaIncorreta3 !== "") && (imageRespostaIncorreta3 !== "")){
+        quizesCriados[0][0][3].push({
+            text: respostaIncorreta3,
+            image: imageRespostaIncorreta3,
+            isCorrectAnswer: false
+        });
+    };
 }
