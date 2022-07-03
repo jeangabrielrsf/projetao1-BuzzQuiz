@@ -1,9 +1,10 @@
 const urlAPI = "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/";
-let quizes = []; 
+let quizes = quizesCriados = []; 
 let escolhido; //variável para guardar o objeto de um quiz.
 let erros = 0;
 let acertos = 0;
 let resultado = 0;
+
 
 const promessa = axios.get(urlAPI);
 promessa.then(processarResposta);
@@ -344,16 +345,41 @@ function mostrarFimQuizz() {
 
 
 
-
+// FUNÇÃO PARA POSTAR TITULO E A IMAGEM DO QUIZZ
 function criarQuizz(){
     const pagina1 = document.querySelector('.pagina1');
     const pagina3 = document.querySelector('.pagina3');
 
     pagina1.classList.add("escondido");
     pagina3.classList.remove("escondido");
-    
+    criandoQuizz();
     
 }
+
+function postarTituloQuiz(){
+
+    const tituloQuizz = document.querySelector("input:nth-child(1)").innerHTML.value;
+    const imagemQuizz = document.querySelector("input:nth-child(2)").innerHTML.value;
+
+    quizesCriados.push({
+        title: tituloQuizz,
+        image: imagemQuizz
+    });
+    console.log(quizesCriados);
+}
+
+// QUANTIDADE DE PERGUNTAS A SEREM CRIADAS
+function quantidadePerguntas(){
+
+    const numeroPerguntas = document.querySelector(".3 input").value
+}
+
+// QUANTIDADE DE NÍVES A SEREM CRIADOS
+function quantidadeNiveis(){
+
+    const numeroNiveis = document.querySelector(".4 input").value
+}
+
 
 function enviaTituloQuizz(){
     const grade1 = document.querySelector(".grade-1");
@@ -361,7 +387,7 @@ function enviaTituloQuizz(){
 
     grade1.classList.add("escondido");
     grade2.classList.remove("escondido");
-
+    postarTituloQuiz()
 }
 
 function prosseguiPraCriarNiveis(){
@@ -379,4 +405,21 @@ function voltarPraHome(){
 
     pagina3.classList.add("escondido");
     pagina1.classList.remove("escondido");
+}
+
+function criandoQuizz(){
+
+    const infoQuizz = document.querySelector(".cx-dados-quizz");
+
+    infoQuizz.innerHTML = `
+    <form>
+    <input type="text" class="cx-input 1" placeholder="Título do seu quizz" pattern="[A-Za-z].{1,20}">
+    <input type="text" class="cx-input 2" placeholder="URL da imagem do seu quizz">
+    <input type="text" class="cx-input 3" placeholder="Quantidade de perguntas do quizz">
+    <input type="text" class="cx-input 4" placeholder="Quantidade de níveis do quizz">
+    </form>
+    `;
+
+
+
 }

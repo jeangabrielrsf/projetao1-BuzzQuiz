@@ -286,11 +286,6 @@ body {
 }
 
 
-.escondido {
-    display: none;
-}
-
-
 .fim-quizz {
     margin-top: 80px;
     display: flex;
@@ -390,7 +385,7 @@ body {
     font-weight: 700;
     font-size: 23px;
 }
-
+ 
 .cx-dados-quizz{
     height: 256px;
     width: 600px;
@@ -411,6 +406,7 @@ body {
     font-style: italic;
     font-size: 19px;
     font-weight: 400;
+    margin: 10px 0px;
 }
 
 .prosseguir-criar-perguntas{
@@ -509,14 +505,12 @@ body {
 .grade-3{
     width: 600px;
     margin: 150px auto;
-}
-
-.grade{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
 }
+
 
 .grade-3 h3{
     font-size: 23px;
@@ -556,3 +550,6 @@ body {
     color: #818181;
 }
 
+.escondido {
+    display: none;
+}
