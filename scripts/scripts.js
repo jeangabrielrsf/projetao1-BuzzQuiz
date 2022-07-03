@@ -3,6 +3,7 @@ let quizes = [];
 let escolhido; //variável para guardar o objeto de um quiz.
 let erros = 0;
 let acertos = 0;
+let resultado = 0;
 
 const promessa = axios.get(urlAPI);
 promessa.then(processarResposta);
@@ -120,29 +121,52 @@ function abrirQuiz () {
 
 
 
-function renderizarFimQuizz() {
-
+function renderizarFimQuizz(nivel) {
+    let pagina = document.querySelector(".pagina2");
     let string = `
         <div class="fim-quizz">
             <div class="titulo-fim-quizz">
-                <p>% de acertos no quiz.</p>
+                <p>${resultado}% de acertos: ${nivel.title}</p>
             </div>
             <div class="caixa-texto-fim">
                 <div class="imagem-fim">
-                    <img src="./img/narutin-sasukin.png" alt="">
+                    <img src="${nivel.image}" alt="">
                 </div>
                 <div class="texto-fim">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus ut libero, dolor laboriosam alias unde in fugiat repudiandae dicta labore perferendis rem quas tempore aperiam assumenda consectetur ipsum. Reiciendis, est.</p>
+                    <p>${nivel.text}</p>
                 </div>
             </div>
         </div>`;
-
+    pagina.innerHTML += string;
 } 
 
 
 function calcularAcertos() {
-    niveis = vetor.levels;
+    let niveis = escolhido.levels;
+    console.log(niveis);
+    let perguntas = escolhido.questions.length;
+    let respondidas = acertos + erros;
+    let nivel;
+    let aux = 0;
 
+    if (respondidas < perguntas) {
+        console.log("ainda tem pergunta pra responder");
+        return;
+    } else {
+        resultado = Math.round((acertos/perguntas) * 100);
+        console.log(resultado);
+        for (let i=0; i < niveis.length; i++) {
+            if (resultado >= niveis[i].minValue) {
+                if (niveis[i].minValue >= aux) {
+                    nivel = niveis[i];
+                    aux = nivel.minValue;
+                }
+            } 
+        }
+        
+    }
+    renderizarFimQuizz(nivel);
+    mostrarFimQuizz();   
 }
 
 
@@ -304,6 +328,7 @@ function selecionarResposta(elemento) {
                                 proxima.scrollIntoView({block:"start", behavior:"smooth", inline:"nearest"});
                             }
                         },2000);
+    calcularAcertos();
 }
 
 
@@ -326,6 +351,7 @@ function criarQuizz(){
 
     pagina1.classList.add("escondido");
     pagina3.classList.remove("escondido");
+    
     
 }
 
