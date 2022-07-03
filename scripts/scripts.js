@@ -5,6 +5,12 @@ let erros = 0;
 let acertos = 0;
 let resultado = 0;
 
+let quizzEnviado = {
+	title: "",
+	image: "",
+	questions: [],
+	levels: []
+}
 
 const promessa = axios.get(urlAPI);
 promessa.then(processarResposta);
@@ -411,6 +417,7 @@ function postarTituloQuiz(){
     const tituloQuizz = document.querySelector("input:nth-child(1)").value;
     const imagemQuizz = document.querySelector("input:nth-child(2)").value;
     
+
     quizesCriados.push({
         title: tituloQuizz,
         image: imagemQuizz
@@ -420,9 +427,11 @@ function postarTituloQuiz(){
 
 // QUANTIDADE DE PERGUNTAS A SEREM CRIADAS
 function quantidadePerguntas(){
-    numeroPerguntas = 3
+    
     const numeroPerguntas = document.querySelector("input:nth-child(3)").value
     console.log(numeroPerguntas);
+
+    const numeroPerguntas = document.querySelector("input:nth-child(3)").value
 }
 
 // QUANTIDADE DE NÍVES A SEREM CRIADOS
@@ -430,6 +439,7 @@ function quantidadeNiveis(){
 
     const numeroNiveis = document.querySelector("input:nth-child(4)").value
     console.log(numeroNiveis);
+    return numeroNiveis;
 }
 
 
@@ -445,13 +455,72 @@ function enviaTituloQuizz(){
 
 function prosseguiPraCriarNiveis(){
     const grade2 = document.querySelector(".grade-2");
-    const grade3 = document.querySelector(".grade-3");
+    let gradeNiveis = document.querySelector(".grade-niveis");
+    let qtdNiveis = quantidadeNiveis();
 
+    gradeNiveis.innerHTML = "";
+
+    for (let i=0; i < qtdNiveis; i++) {
+        gradeNiveis.innerHTML += `
+            <div class="nivel">
+                <form>
+                    <h3>Nível ${i+1}</h3>
+                    <input type="text" class="titulo-nivel" placeholder="Título do nível" required>
+                    <input type="number" class="porcentagem-nivel" placeholder="% de acerto mínima" required>
+                    <input type="url" class="url-nivel" placeholder="URL da imagem do nível" required>
+                    <input type="text" class="descricao-nivel" placeholder="Descrição do nível" required>
+                </form>
+            </div>
+        `;
+    }
+
+    gradeNiveis.innerHTML += `
+        <div class="botao-finalizar" onclick="finalizarQuizz()">
+            <p>Finalizar Quizz</p>
+        </div>
+    `;
     grade2.classList.add("escondido");
     grade3.classList.remove("escondido");
     adicionandoRespostas();
 
+    gradeNiveis.classList.remove("escondido");
+}
 
+
+
+function finalizarQuizz() {
+    const qtdNiveis = quantidadeNiveis();
+    const gradeNiveis = document.querySelector(".grade-niveis");
+    const grade3 = document.querySelector(".grade-3");
+    const nivel = document.querySelector(".nivel");
+    let tituloNivel;
+    let porcentagem;
+    let urlNivel;
+    let textoNivel;
+    let objetoNivel = {
+        title: "",
+        image: "",
+        text: "",
+        minValue: 0
+    };
+
+    for (let i=0; i < qtdNiveis; i++) {
+        tituloNivel = nivel.querySelector(".titulo-nivel").value;
+        porcentagem = nivel.querySelector(".porcentagem-nivel").value;
+        urlNivel = nivel.querySelector(".url-nivel").value;
+        textoNivel = nivel.querySelector(".descricao-nivel").value;
+
+        objetoNivel.title = tituloNivel;
+        objetoNivel.minValue = porcentagem;
+        objetoNivel.image = urlNivel;
+        objetoNivel.text = textoNivel;
+
+        quizzEnviado.levels[i].push(objetoNivel);
+        nivel = nivel.nextElementSibling;
+    }
+    
+    gradeNiveis.classList.add("escondido");
+    grade3.classList.remove("escondido");
 }
 
 function voltarPraHome(){
