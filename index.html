@@ -20,7 +20,7 @@
     <div class="pai">
         <!--PÁGINA 1-->
         
-        <div class="pagina1">
+        <div class="pagina1 escondido">
             <div class="criar-quizz escondido" onclick="criarQuizz()">
                 <p>Você não criou nenhum</br> quizz ainda :(</p>
                 <div class="criar-quiz-botao" >
@@ -102,8 +102,8 @@
            
 
         </div>
-        <div class="pagina3 escondido">
-            <div class="grade-1">  
+        <div class="pagina3">
+            <div class="grade-1 escondido">  
                 <h3>Comece pelo começo</h3>
                 <div class="cx-dados-quizz">
                     <input type="text" class="cx-input" placeholder="Título do seu quizz" pattern="[A-Za-z].{1, 20}">
@@ -146,15 +146,29 @@
                     </div>
                 </div>
             </div>
-            <div class="grade-3 escondido">
-                <div class="grade">
-                    <h3>Seu quizz está pronto!</h3>
-                    <div class="quizz" style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(img/narutin-sasukin.png)">
-                        <div><h3>Titulo quizz</h3></div>
+            <div class="grade-niveis">
+                
+                    <div class="nivel">
+                        <form></form>
+                            <h3>Nível 1</h3>
+                            <input type="text" class="titulo-nivel" placeholder="Título do nível" required>
+                            <input type="number" class="porcentagem-nivel" placeholder="% de acerto mínima" required>
+                            <input type="url" class="url-nivel" placeholder="URL da imagem do nível" required>
+                            <input type="text" class="descricao-nivel" placeholder="Descrição do nível" required>
+                        </form>
                     </div>
-                    <div class="acessar-quizz" onclick="acessarQuizz()"><p>Acessar Quizz</p></div>
-                    <div class="voltar-pra-home" onclick="voltarPraHome()"><p>Voltar pra home</p></div>
-                </div>   
+                
+                <div class="botao-finalizar" onclick="finalizarQuizz()">
+                    <p>Finalizar Quizz</p>
+                </div>
+            </div>
+            <div class="grade-3 escondido">
+                <h3>Seu quizz está pronto!</h3>
+                <div class="quizz" style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(img/narutin-sasukin.png)">
+                    <div><h3>Titulo quizz</h3></div>
+                </div>
+                <div class="acessar-quizz" onclick="acessarQuizz()"><p>Acessar Quizz</p></div>
+                <div class="voltar-pra-home" onclick="voltarPraHome()"><p>Voltar pra home</p></div> 
             </div>
 
         </div>

@@ -5,6 +5,75 @@ let erros = 0;
 let acertos = 0;
 let resultado = 0;
 
+let quizzEnviado = {
+	title: "",
+	image: "",
+	questions: [
+		{
+			title: "Título da pergunta 1",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 2",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 3",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		}
+	],
+	levels: [
+		{
+			title: "Título do nível 1",
+			image: "https://http.cat/411.jpg",
+			text: "Descrição do nível 1",
+			minValue: 0
+		},
+		{
+			title: "Título do nível 2",
+			image: "https://http.cat/412.jpg",
+			text: "Descrição do nível 2",
+			minValue: 50
+		}
+	]
+}
+
 const promessa = axios.get(urlAPI);
 promessa.then(processarResposta);
 
@@ -31,7 +100,7 @@ function renderizarQuizzes(){
 }
 
 
-renderizarQuizzes();
+//renderizarQuizzes();
 
 
 
@@ -395,6 +464,8 @@ function mostrarFimQuizz() {
 
 
 
+/* PÁGINA 3 ABAIXO*/
+
 function criarQuizz(){
     const pagina1 = document.querySelector('.pagina1');
     const pagina3 = document.querySelector('.pagina3');
@@ -416,11 +487,21 @@ function enviaTituloQuizz(){
 
 function prosseguiPraCriarNiveis(){
     const grade2 = document.querySelector(".grade-2");
-    const grade3 = document.querySelector(".grade-3");
+    const gradeNiveis = document.querySelector(".grade-niveis");
 
     grade2.classList.add("escondido");
-    grade3.classList.remove("escondido");
+    gradeNiveis.classList.remove("escondido");
 
+}
+
+function finalizarQuizz() {
+    const gradeNiveis = document.querySelector(".grade-niveis");
+    const grade3 = document.querySelector(".grade3");
+    let tituloNivel = document.querySelector(".grade-niveis .titulo-nivel").value;
+    console.log(dataForm);
+    quizzEnviado.levels[i].ti
+    // gradeNiveis.classList.add("escondido");
+    // grade3.classList.remove("escondido");
 }
 
 function voltarPraHome(){

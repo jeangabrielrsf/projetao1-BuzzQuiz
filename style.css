@@ -556,3 +556,54 @@ body {
     color: #818181;
 }
 
+.grade-niveis {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nivel {
+    padding: 10px 0px;
+    background-color:#ffffff ;
+    width: 600px;
+    height: 316px;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+.nivel form {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 316px;
+    flex-direction: column;
+    width: 100%;
+}
+
+.nivel input {
+    width: 95%;
+    height: 45px;
+}
+
+.botao-finalizar {
+    background-color: #EC362D;
+    border-radius: 15px;
+    border: none;
+    color: #FFFFFF;
+    width: 324px;
+    height: 54px;
+    font-weight:400;
+    font-size: 21px;
+    line-height: 24.61px;
+    margin-top: 30px;
+}
+
+.botao-finalizar:hover {
+    background-color:#f06962;
+    cursor: pointer;
+}
