@@ -520,8 +520,64 @@ function finalizarQuizz() {
     
     gradeNiveis.classList.add("escondido");
     grade3.classList.remove("escondido");
+    renderizarFimQuizzCriado();
     console.log(quizzEnviado);
 }
+
+function renderizarFimQuizzCriado () {
+    let pagina = document.querySelector(".grade-3");
+    pagina.innerHTML = "";
+    pagina.innerHTML = `
+        <h3>Seu quizz está pronto!</h3>
+        <div class="quizz" style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(${quizzEnviado.image})">
+            <div><h3>${quizzEnviado.title}</h3></div>
+        </div>
+        <div class="acessar-quizz" onclick="acessarQuizzCriado()"><p>Acessar Quizz</p></div>
+        <div class="voltar-pra-home" onclick="voltarPraHome()"><p>Voltar pra home</p></div> 
+        `;
+}
+
+function acessarQuizzCriado () {
+    const pagina3 = document.querySelector(".pagina3");
+    let pagina2 = document.querySelector(".pagina2");
+
+    pagina3.classList.add("escondido");
+    pagina2.classList.remove("escondido");
+
+    erros = 0;
+    acertos = 0;
+    let pergunta = document.querySelector(".pagina2 .caixa-pergunta");
+
+    let qtdPerguntas = quizzEnviado.questions.length;
+    let perguntas = quizzEnviado.questions;
+    
+    pagina2.innerHTML = "";
+    pergunta.innerHTML = "";
+
+    pagina2.innerHTML += `
+        <div class="capa-quiz" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${quizzEnviado.image})">
+            <p>${quizzEnviado.title}</p>
+        </div>
+        `;
+    for (let i=0; i < qtdPerguntas; i++) {
+        
+        //console.log(`pergunta ${i}`);
+        pergunta.innerHTML += `
+            <div class="caixa-pergunta">
+                <div class="titulo-pergunta" style="background-color: ${perguntas[i].color}">
+                    <h2>${perguntas[i].title}</h2>
+                </div>
+                <div class="respostas">
+                    ${renderizarRespostas(perguntas,i)}
+                </div>
+            </div>
+        `;
+    }
+    pagina2.innerHTML += pergunta.innerHTML;
+    document.querySelector(".capa-quiz").scrollIntoView(true);
+}
+
+
 
 function voltarPraHome(){
     const pagina3 = document.querySelector(".pagina3");
