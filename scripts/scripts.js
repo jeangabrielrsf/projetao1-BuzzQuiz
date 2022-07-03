@@ -26,7 +26,7 @@ function renderizarQuizzes(){
                 <p class="id-quiz">${quizes[i].id}</p>
                 <div><h3>${quizes[i].title}</h3></div>
             </div>
-        `;
+        `
     }
 }
 
@@ -117,13 +117,15 @@ function abrirQuiz () {
         `;
     }
     capa.innerHTML += pagina.innerHTML;
+    document.querySelector(".capa-quiz").scrollIntoView(true);
 }
 
 
 
 function renderizarFimQuizz(nivel) {
     let pagina = document.querySelector(".pagina2");
-    let string = `
+    let string = "";
+    string = `
         <div class="fim-quizz">
             <div class="titulo-fim-quizz">
                 <p>${resultado}% de acertos: ${nivel.title}</p>
@@ -136,9 +138,57 @@ function renderizarFimQuizz(nivel) {
                     <p>${nivel.text}</p>
                 </div>
             </div>
-        </div>`;
+        </div>
+        <div class="botao-reiniciar" onclick="reiniciarQuizz()">
+            <p>Reiniciar Quizz</p>
+        </div>
+
+        <div class="botao-voltar" onclick="voltarHomePg2()">
+            <p>Voltar pra home</p>
+        </div>
+        
+        `;
     pagina.innerHTML += string;
-} 
+}
+
+
+function reiniciarQuizz() {
+    const titulo = document.querySelector(".capa-quiz");
+    let fim = document.querySelector(".fim-quizz");
+    let respostas = document.querySelectorAll(".resposta");
+
+    fim.innerHTML = "";
+    acertos = 0;
+    erros = 0;
+    resultado = 0;
+
+
+    for (let i=0; i < respostas.length; i++) {
+        if (respostas[i].classList.contains("opaco")) {
+            respostas[i].classList.remove("opaco");
+        }
+        if (respostas[i].classList.contains("acertou")) {
+            respostas[i].classList.remove("acertou");
+        }
+        if (respostas[i].classList.contains("errou")) {
+            respostas[i].classList.remove("errou");
+        }
+    }
+
+    titulo.scrollIntoView({behavior: "smooth", block:"start"});
+    abrirQuiz();
+}
+
+function voltarHomePg2 () {
+    pagina2 = document.querySelector(".pagina2");
+    pagina1 = document.querySelector(".pagina1");
+    pai = document.querySelector(".pai");
+
+    pagina2.classList.add("escondido");
+    pagina1.classList.remove("escondido");
+    renderizarQuizzes();
+    pai.scrollIntoView(true);
+}
 
 
 function calcularAcertos() {
@@ -325,7 +375,7 @@ function selecionarResposta(elemento) {
                                 return;
                             } else {
                                 console.log("tem próxima");
-                                proxima.scrollIntoView({block:"start", behavior:"smooth", inline:"nearest"});
+                                proxima.scrollIntoView({block:"start", behavior:"smooth", inline:"center"});
                             }
                         },2000);
     calcularAcertos();
