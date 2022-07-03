@@ -1,5 +1,8 @@
 const urlAPI = "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/";
 let quizes = []; 
+let escolhido; //variável para guardar o objeto de um quiz.
+let erros = 0;
+let acertos = 0;
 
 const promessa = axios.get(urlAPI);
 promessa.then(processarResposta);
@@ -27,7 +30,7 @@ function renderizarQuizzes(){
 }
 
 
-//renderizarQuizzes();
+renderizarQuizzes();
 
 
 
@@ -51,11 +54,11 @@ function selecionarQuiz (elemento) {
 /*SE A REQUISIÇÃO DO AXIOS DEU CERTO, EXECUTA ESSA FUNÇÃO*/
 function checarQuiz(resposta) {
     const codigo = resposta.status; //variável para visualizar o código de retorno que ta dando
-    const objQuiz = resposta.data;
+    escolhido = resposta.data;
     
     if (codigo === 200) {
         esconderTela1();
-        abrirQuiz(objQuiz);
+        abrirQuiz();
     }
 }
 
@@ -71,12 +74,14 @@ function esconderTela1 () {
 }
 
 /*FUNÇÃO PARA RENDERIZAR A PÁGINA DO QUIZ (TELA 2)*/
-function abrirQuiz (vetor) {
+function abrirQuiz () {
+    erros = 0;
+    acertos = 0;
     const pagina = document.querySelector(".pagina2 .caixa-pergunta");
     let capa = document.querySelector(".pagina2")
 
-    let qtdPerguntas = vetor.questions.length;
-    let perguntas = vetor.questions;
+    let qtdPerguntas = escolhido.questions.length;
+    let perguntas = escolhido.questions;
     
     
 
@@ -92,8 +97,8 @@ function abrirQuiz (vetor) {
     pagina.innerHTML = "";
 
     capa.innerHTML += `
-        <div class="capa-quiz" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${vetor.image})">
-            <p>${vetor.title}</p>
+        <div class="capa-quiz" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${escolhido.image})">
+            <p>${escolhido.title}</p>
         </div>
         `;
     for (let i=0; i < qtdPerguntas; i++) {
@@ -112,6 +117,34 @@ function abrirQuiz (vetor) {
     }
     capa.innerHTML += pagina.innerHTML;
 }
+
+
+
+function renderizarFimQuizz() {
+
+    let string = `
+        <div class="fim-quizz">
+            <div class="titulo-fim-quizz">
+                <p>% de acertos no quiz.</p>
+            </div>
+            <div class="caixa-texto-fim">
+                <div class="imagem-fim">
+                    <img src="./img/narutin-sasukin.png" alt="">
+                </div>
+                <div class="texto-fim">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus ut libero, dolor laboriosam alias unde in fugiat repudiandae dicta labore perferendis rem quas tempore aperiam assumenda consectetur ipsum. Reiciendis, est.</p>
+                </div>
+            </div>
+        </div>`;
+
+} 
+
+
+function calcularAcertos() {
+    niveis = vetor.levels;
+
+}
+
 
 
 /* FUNÇAO PARA EMBARALHAR UM VETOR */
@@ -191,8 +224,10 @@ function selecionarResposta(elemento) {
 
     
     if (ehCorreta === "true") { /*se ele acertou*/
+        acertos += 1;
         elemento.classList.add("acertou");
         elemento.classList.add("clicado");
+
         if (proxima !== null) {
             while (proxima !== null)  {
                 console.log(proxima);
@@ -205,7 +240,6 @@ function selecionarResposta(elemento) {
                 proxima = proxima.nextElementSibling;
             }
         }
-
         if (anterior !== null) {
             while(anterior !== null) {
                 console.log(anterior);
@@ -217,10 +251,10 @@ function selecionarResposta(elemento) {
                 }
                 anterior = anterior.previousElementSibling;
             }
-            
         }
 
     } else { /*se ele errou a resposta*/
+        erros += 1;
         elemento.classList.add("errou");
         elemento.classList.add("clicado");
         if (proxima !== null) {
@@ -267,16 +301,22 @@ function selecionarResposta(elemento) {
                                 return;
                             } else {
                                 console.log("tem próxima");
-                                proxima.scrollIntoView(false);
+                                proxima.scrollIntoView({block:"start", behavior:"smooth", inline:"nearest"});
                             }
                         },2000);
 }
 
 
 
+
 function mostrarFimQuizz() {
     /*implementando*/
+    setTimeout(function () {
+        fim = document.querySelector(".fim-quizz");        
+        fim.scrollIntoView({block:"start", behavior:"smooth", inline:"nearest"});
+    },2000);
 }
+
 
 
 
