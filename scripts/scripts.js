@@ -96,16 +96,6 @@ function abrirQuiz () {
 
     let qtdPerguntas = escolhido.questions.length;
     let perguntas = escolhido.questions;
-    
-    
-
-
-    //RASCUNHO DE COMO É O FOR
-    // for (let i=0; i<qtdPerguntas; i++) {
-    //     for (let j=0; j < perguntas[i].answers.length; j++) {
-    //         console.log(perguntas[i].answers[j].text);
-    //     }
-    // }
 
     capa.innerHTML = "";
     pagina.innerHTML = "";
@@ -471,22 +461,25 @@ function prosseguiPraCriarNiveis(){
 
     for (let i=0; i < qtdNiveis; i++) {
         gradeNiveis.innerHTML += `
-            <div class="nivel">
-                <form>
-                    <h3>Nível ${i+1}</h3>
-                    <input type="text" class="titulo-nivel" placeholder="Título do nível" required>
-                    <input type="number" class="porcentagem-nivel" placeholder="% de acerto mínima" required>
-                    <input type="url" class="url-nivel" placeholder="URL da imagem do nível" required>
-                    <input type="text" class="descricao-nivel" placeholder="Descrição do nível" required>
-                </form>
-            </div>
+            
+                <div class="nivel">
+                    <form >
+                        <h3>Nível ${i+1}</h3>
+                        <input type="text" class="titulo-nivel" placeholder="Título do nível" required>
+                        <input type="number" class="porcentagem-nivel" placeholder="% de acerto mínima" required>
+                        <input type="url" class="url-nivel" placeholder="URL da imagem do nível" required>
+                        <input type="text" class="descricao-nivel" placeholder="Descrição do nível" required>
+                    </form>
+                </div>
+
         `;
     }
 
     gradeNiveis.innerHTML += `
-        <div class="botao-finalizar" onclick="finalizarQuizz()">
-            <p>Finalizar Quizz</p>
-        </div>
+            <div class="botao-finalizar">
+                <p>Finalizar Quizz</p>
+            </div>
+        
     `;
     grade2.classList.add("escondido");
     //grade3.classList.remove("escondido");
@@ -658,21 +651,21 @@ function criarPerguntas(i){
     <div class="resposta-correta">
         <h4>Resposta Correta</h4>
         <form>
-            <input type="text" class="pergunta${i+1}-respCerta" placeholder="Resposta correta">
-            <input type="url" class="pergunta${i+1}-respCertaImagem" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
+            <input type="text" class="pergunta${i+1}-resp1" placeholder="Resposta correta">
+            <input type="url" class="pergunta${i+1}-respImagem1" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
         </form>
     </div>
     `;
 
 
-    for(let j = 0; j < 3; j ++){
+    for(let j = 1; j < 4; j ++){
 
         estrutura.innerHTML += `    
         <div class="resposta-incorreta">
             <h4>Respostas incorretas</h4>
             <form>
-                <input type="text" class="pergunta${i+1}-respErrada${j+1}" placeholder="Resposta incorreta">
-                <input type="url" class="pergunta${i+1}-respErradaImagem${j+1}" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
+                <input type="text" class="pergunta${i+1}-resp${j+1}" placeholder="Resposta incorreta">
+                <input type="url" class="pergunta${i+1}-respImagem${j+1}" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
             </form>
         </div>
         `;
@@ -684,94 +677,60 @@ function renderizarPerguntasCriadas(){
     let numPerguntas = quantidadePerguntas();
     let perguntaTitulo;
     let corQuizz;
-
-   
-    for (let i = 0; i < numPerguntas; i++){
-        perguntaTitulo = document.querySelector(`.texto-pergunta${i+1}`).value;
-        corQuizz = document.querySelector(`.cor-fundo-pergunta${i+1}`).value;
-        adicionandoRespostas(i);
-    }
-}
-
-
-function adicionandoRespostas(i){
-    
-    /*
-    precisamos achar um jeito de pegar as informaçoes que o usuário digitou nas perguntas. URGENTE!!!
-    */
-
-    // let respostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
-    // let imageRespostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
-    // let respostaIncorreta2 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
-    // let imageRespostaIncorreta2 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
-    // let respostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
-    // let imageRespostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
-    let respostaCorreta = document.querySelector(`.pergunta${i+1}-respCerta`).value;
-    let imageRespostaCorreta = document.querySelector(`.pergunta${i+1}-respCertaImagem`).value;
+    let resposta1, resposta2, resposta3,resposta4;
+    let imagemResposta1, imagemResposta2, imagemResposta3, imagemResposta4;
     let objResposta = {
         text: "",
         image: "",
         isCorrectAnswer: true
     };
 
-    objResposta.text = respostaCorreta;
-    objResposta.image = imageRespostaCorreta;
-    objResposta.isCorrectAnswer = true;
+   
+    for (let i = 0; i < numPerguntas; i++){
+        perguntaTitulo = document.querySelector(`.texto-pergunta${i+1}`).value;
+        corQuizz = document.querySelector(`.cor-fundo-pergunta${i+1}`).value;
+        
+        objPergunta.title = perguntaTitulo;
+        objPergunta.color = corQuizz;
+        
+        resposta1 = document.querySelector(`.pergunta${i+1}-resp1`).value;
+        imagemResposta1 = document.querySelector(`.pergunta${i+1}-respImagem1`).value;
+        objResposta.text = resposta1;
+        objResposta.image = imagemResposta1;
+        objResposta.isCorrectAnswer = true;
+        objPergunta.answers.push(objResposta);
 
-    objPergunta.answers.push(objResposta);
-    alert(objPergunta.answers);
+        resposta2 = document.querySelector(`.pergunta${i+1}-resp2`).value;
+        imagemResposta2 = document.querySelector(`.pergunta${i+1}-respImagem2`).value;
+        objResposta.text = resposta2;
+        objResposta.image = imagemResposta2;
+        objResposta.isCorrectAnswer = false;
+        objPergunta.answers.push(objResposta);
 
-    for (let j=0; j < 3; j++) {
-        let respostaIncorreta = document.querySelector(`.pergunta${i+1}-respErrada${j+1}`).value;
-        let imageRespostaIncorreta = document.querySelector(`.pergunta${i+1}-respErradaImagem${j+1}`).value;
-        if((respostaIncorreta !== "") && (imageRespostaIncorreta !== "")) {
-            objResposta.text = respostaIncorreta;
-            objResposta.image = imageRespostaIncorreta;
-            objResposta.isCorrectAnswer = false;
+        resposta3 = document.querySelector(`.pergunta${i+1}-resp3`).value;
+        imagemResposta3 = document.querySelector(`.pergunta${i+1}-respImagem3`).value;
+        objResposta.text = resposta3;
+        objResposta.image = imagemResposta3;
+        objResposta.isCorrectAnswer = false;
+        objPergunta.answers.push(objResposta);
 
-            objPergunta.answers.push(objResposta);
-        } else {
-            alert("resposta vazia. quebrei o for");
-            break;
-        }
+        resposta4 = document.querySelector(`.pergunta${i+1}-resp4`).value;
+        imagemResposta4 = document.querySelector(`.pergunta${i+1}-respImagem4`).value;
+        objResposta.text = resposta4;
+        objResposta.image = imagemResposta4;
+        objResposta.isCorrectAnswer = false;
+        objPergunta.answers.push(objResposta);
+
+        
+        
+        console.log(objResposta);
+        console.log(objPergunta);
+
+        
+        //adicionandoRespostas(i);
+        
+        quizzEnviado.questions.push(objPergunta);
     }
+    //console.log(quizzEnviado);
     
-    quizzEnviado.questions.push(objPergunta);
-    
-    // quizzEnviado.questions[i].answers.push({
-    //     text: respostaCorreta,
-    //     image: imageRespostaCorreta,
-    //     isCorrectAnswer: true
-    // });
-
-   
-
-    // quizzEnviado.questions[i].answers.push({
-    //     text: respostaIncorreta,
-    //     image: imageRespostaIncorreta,
-    //     isCorrectAnswer: false
-    // });
-
-   
-    // if((respostaIncorreta2 !== "") && (imageRespostaIncorreta2 !== "")){
-    //     quizzEnviado.questions[i].answers.push({
-    //         text: respostaIncorreta2,
-    //         image: imageRespostaIncorreta2,
-    //         isCorrectAnswer: false
-    //     });
-    // };
-
-    
-
-    // if((respostaIncorreta3 !== "") && (imageRespostaIncorreta3 !== "")){
-    //     quizzEnviado.questions[i].answers.push({
-    //         text: respostaIncorreta3,
-    //         image: imageRespostaIncorreta3,
-    //         isCorrectAnswer: false
-    //     });
-    // };
-
-    
-    console.log(objPergunta);
-    console.log(quizzEnviado);
 }
