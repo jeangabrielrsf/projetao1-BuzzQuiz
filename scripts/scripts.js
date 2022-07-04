@@ -10,7 +10,8 @@ let quizzEnviado = {
 	image: "",
 	questions: [],
 	levels: []
-}
+}; 
+
 
 const promessa = axios.get(urlAPI);
 promessa.then(processarResposta);
@@ -418,11 +419,11 @@ function postarTituloQuiz(){
     const imagemQuizz = document.querySelector("input:nth-child(2)").value;
     
 
-    quizesCriados.push({
-        title: tituloQuizz,
-        image: imagemQuizz
-    });
-    console.log(quizesCriados);
+ //   quizzEnviado.push({
+  //      title: tituloQuizz,
+   //     image: imagemQuizz
+//});
+  //  console.log(quizzEnviado);
 }
 
 // QUANTIDADE DE PERGUNTAS A SEREM CRIADAS
@@ -430,8 +431,7 @@ function quantidadePerguntas(){
     
     const numeroPerguntas = document.querySelector("input:nth-child(3)").value
     console.log(numeroPerguntas);
-
-    const numeroPerguntas = document.querySelector("input:nth-child(3)").value
+    return numeroPerguntas;
 }
 
 // QUANTIDADE DE NÍVES A SEREM CRIADOS
@@ -449,12 +449,14 @@ function enviaTituloQuizz(){
 
     grade1.classList.add("escondido");
     grade2.classList.remove("escondido");
-    postarTituloQuiz();
-    criarPerguntas();
+   // postarTituloQuiz();
+    numeroDePerguntas()
+    
 }
 
 function prosseguiPraCriarNiveis(){
     const grade2 = document.querySelector(".grade-2");
+    const grade3 = document.querySelector(".grade-3");
     let gradeNiveis = document.querySelector(".grade-niveis");
     let qtdNiveis = quantidadeNiveis();
 
@@ -482,8 +484,8 @@ function prosseguiPraCriarNiveis(){
     grade2.classList.add("escondido");
     grade3.classList.remove("escondido");
     adicionandoRespostas();
-
     gradeNiveis.classList.remove("escondido");
+    reiderirarPerguntasCriadas();
 }
 
 
@@ -546,11 +548,21 @@ function criandoQuizz(){
 
 }
 
+function numeroDePerguntas(){
+let numPerguntas = quantidadePerguntas();
+const pagina = document.querySelector(".grade-2");
+
+
+ for (let i = 0; i < numPerguntas; i++){
+    criarPerguntas();
+ }
+}
+
 function criarPerguntas(){
 
     const perguntaQuizz = document.querySelector(".pergunta");
 
-    perguntaQuizz.innerHTML = `
+    perguntaQuizz.innerHTML += `
     <form>
     <input type="text" class="cx-input" placeholder="Texto da pergunta" pattern="[A-Za-z].{20,65}">
     <input type="color" class="cx-input" placeholder="Cor de fundo da pergunta">
@@ -583,54 +595,63 @@ function criarPerguntas(){
 
 }
 
-    
-function adicionandoRespostas(){
+function reiderirarPerguntasCriadas(){
+let numPerguntas = quantidadePerguntas();
+    for (let i = 0; i < numPerguntas; i++){
+        adicionandoRespostas();
+    }
 
-    const perguntadoQuizz = document.querySelector("input:nth-child(5)").value;
-    const corQuizz = document.querySelector("input:nth-child(6)").value;
+}
+let i = 0;
+function adicionandoRespostas(){
     
-    quizesCriados[0][0].push({
+    const perguntadoQuizz = document.querySelector(".pergunta input:nth-child(1)").value;
+    const corQuizz = document.querySelector(".pergunta input:nth-child(2)").value;
+    
+    quizzEnviado.questions[i].push({
         title: perguntadoQuizz,
-        image: corQuizz
+        color: corQuizz
     });
     
-    const respostaCorreta = document.querySelector("input:nth-child(7)").value;
-    const imageRespostaCorreta = document.querySelector("input:nth-child(8)").value;
+    const respostaCorreta = document.querySelector(".resposta-correta input:nth-child(1)").value;
+    const imageRespostaCorreta = document.querySelector(".resposta-correta input:nth-child(2)").value;
 
-    quizesCriados[0][0][0].push({
+    quizzEnviado.questions[i].answers[0].push({
         text: respostaCorreta,
         image: imageRespostaCorreta,
         isCorrectAnswer: true
     });
 
-    const respostaIncorreta = document.querySelector("input:nth-child(9)").value;
-    const imageRespostaIncorreta = document.querySelector("input:nth-child(10)").value;
+    const respostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
+    const imageRespostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
 
-    quizesCriados[0][0][1].push({
+    quizzEnviado.questions[i].answers[1].push({
         text: respostaIncorreta,
-        image: imageRespostaIncorreta
+        image: imageRespostaIncorreta,
         isCorrectAnswer: false
     });
 
-    const respostaIncorreta2 = document.querySelector("input:nth-child(11)").value;
-    const imageRespostaIncorreta2 = document.querySelector("input:nth-child(12)").value;
+    const respostaIncorreta2 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
+    const imageRespostaIncorreta2 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
 
     if((respostaIncorreta2 !== "") && (imageRespostaIncorreta2 !== "")){
-        quizesCriados[0][0][2].push({
+        quizzEnviado.questions[i].answers[2].push({
             text: respostaIncorreta2,
             image: imageRespostaIncorreta2,
             isCorrectAnswer: false
         });
     };
 
-    const respostaIncorreta3 = document.querySelector("input:nth-child(13)").value;
-    const imageRespostaIncorreta3 = document.querySelector("input:nth-child(14)").value;
+    const respostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
+    const imageRespostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
 
     if((respostaIncorreta3 !== "") && (imageRespostaIncorreta3 !== "")){
-        quizesCriados[0][0][3].push({
+        quizzEnviado.questions[i].answers[3].push({
             text: respostaIncorreta3,
             image: imageRespostaIncorreta3,
             isCorrectAnswer: false
         });
     };
+    i++
+    console.log(questions);
 }
