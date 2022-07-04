@@ -76,6 +76,21 @@
     div .caixa-texto-fim{
         flex-direction: column;
     }
+    .div .cx-dados-quizz{
+        width: 100%;
+    }
+    div .cx-dados-quizz input{
+        width: 90%;
+    }
+    div .grade-2 input{
+        width: 90%;
+    }
+    div .grade-2{
+        width: 100%;
+    }
+    div .grade-3{
+        width: 100%;
+    }
 }
 
 
@@ -618,6 +633,7 @@ body {
 .voltar-pra-home{
     width: 220.32px;
     height: 44px;
+    margin: 70px auto 30px;
     display: flex;
     align-items: center;
     justify-content: center;

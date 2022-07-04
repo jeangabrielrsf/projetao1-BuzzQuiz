@@ -640,11 +640,9 @@ function criarPerguntas(){
     for(let i = 0; i < 3; i ++){
         respostaFalse.innerHTML += `    
         <form>
-<<<<<<< HEAD
         <input type="text" class="cx-input" placeholder="Resposta incorreta">
         <input type="url" class="cx-input" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
         </form>
-=======
             <input type="text" class="pergunta${i+1}-resp1" placeholder="Resposta correta">
             <input type="url" class="pergunta${i+1}-respImagem1" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
         </form>
@@ -662,7 +660,6 @@ function criarPerguntas(){
                 <input type="url" class="pergunta${i+1}-respImagem${j+1}" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
             </form>
         </div>
->>>>>>> 458064560d17bcf13c7a51204e366fd48b8804a5
         `;
     
     }
@@ -670,7 +667,6 @@ function criarPerguntas(){
 
 }
 
-<<<<<<< HEAD
 function reiderirarPerguntasCriadas(){
 let numPerguntas = quantidadePerguntas();
     for (let i = 0; i < numPerguntas; i++){
@@ -696,20 +692,20 @@ function adicionandoRespostas(i){
 
     quizzEnviado.questions[i].answers[0].push({
         text: respostaCorreta,
-        image: imageRespostaCorreta,
-=======
+        image: imageRespostaCorreta,})
 function renderizarPerguntasCriadas(){
     let numPerguntas = quantidadePerguntas();
     let perguntaTitulo;
     let corQuizz;
     let resposta1, resposta2, resposta3,resposta4;
     let imagemResposta1, imagemResposta2, imagemResposta3, imagemResposta4;
-    let objResposta = {
+    let objResposta = ({
         text: "",
         image: "",
->>>>>>> 458064560d17bcf13c7a51204e366fd48b8804a5
         isCorrectAnswer: true
     });
+}
+}
 
     const respostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
     const imageRespostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
@@ -731,7 +727,6 @@ function renderizarPerguntasCriadas(){
         });
     };
 
-<<<<<<< HEAD
     const respostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
     const imageRespostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
 
@@ -744,7 +739,6 @@ function renderizarPerguntasCriadas(){
     };
     i++
     console.log(questions);
-=======
    
     for (let i = 0; i < numPerguntas; i++){
         perguntaTitulo = document.querySelector(`.texto-pergunta${i+1}`).value;
@@ -793,5 +787,4 @@ function renderizarPerguntasCriadas(){
     }
     //console.log(quizzEnviado);
     
->>>>>>> 458064560d17bcf13c7a51204e366fd48b8804a5
 }
