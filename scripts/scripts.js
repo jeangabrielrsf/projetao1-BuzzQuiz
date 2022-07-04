@@ -420,8 +420,8 @@ function criarQuizz(){
 
 function postarTituloQuiz(){
 
-    const tituloQuizz = document.querySelector("input:nth-child(1)").value;
-    const imagemQuizz = document.querySelector("input:nth-child(2)").value;
+    const tituloQuizz = document.querySelector(".titulo-quizz").value;
+    const imagemQuizz = document.querySelector(".url-imagem-quizz").value;
     
 
    quizzEnviado.title = tituloQuizz;
@@ -432,7 +432,7 @@ function postarTituloQuiz(){
 // QUANTIDADE DE PERGUNTAS A SEREM CRIADAS
 function quantidadePerguntas(){
     
-    const numeroPerguntas = document.querySelector("input:nth-child(3)").value
+    const numeroPerguntas = document.querySelector(".qtd-perguntas").value
     console.log(numeroPerguntas);
     return numeroPerguntas;
 }
@@ -440,7 +440,7 @@ function quantidadePerguntas(){
 // QUANTIDADE DE NÍVES A SEREM CRIADOS
 function quantidadeNiveis(){
 
-    const numeroNiveis = document.querySelector("input:nth-child(4)").value
+    const numeroNiveis = document.querySelector(".qtd-niveis").value
     console.log(numeroNiveis);
     return numeroNiveis;
 }
@@ -603,10 +603,10 @@ function criandoQuizz(){
     
     infoQuizz.innerHTML = `
     <form>
-    <input type="text" class="cx-input" placeholder="Título do seu quizz" pattern="[A-Za-z].{1,20}">
-    <input type="text" class="cx-input" placeholder="URL da imagem do seu quizz">
-    <input type="text" class="cx-input" placeholder="Quantidade de perguntas do quizz">
-    <input type="text" class="cx-input" placeholder="Quantidade de níveis do quizz">
+    <input type="text" class="titulo-quizz" placeholder="Título do seu quizz" pattern="[A-Za-z].{1,20}" required>
+    <input type="url" class="url-imagem-quizz" placeholder="URL da imagem do seu quizz" required>
+    <input type="number" class="qtd-perguntas" placeholder="Quantidade de perguntas do quizz" required>
+    <input type="number" class="qtd-niveis" placeholder="Quantidade de níveis do quizz" required>
     </form>
     `;
 
@@ -647,8 +647,8 @@ function criarPerguntas(i){
     <div class="pergunta">
         <h4>Pergunta ${i+1}</h4>
         <form>
-            <input type="text" class="cx-input" placeholder="Texto da pergunta" pattern="[A-Za-z].{20,65}">
-            <input type="color" class="cx-input" placeholder="Cor de fundo da pergunta">
+            <input type="text" class="texto-pergunta${i+1}" placeholder="Texto da pergunta" pattern="[A-Za-z].{20,65}">
+            <input type="color" class="cor-fundo-pergunta${i+1}" placeholder="Cor de fundo da pergunta">
         </form>
     </div>
     `;
@@ -658,21 +658,21 @@ function criarPerguntas(i){
     <div class="resposta-correta">
         <h4>Resposta Correta</h4>
         <form>
-            <input type="text" class="cx-input" placeholder="Resposta correta">
-            <input type="url" class="cx-input" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
+            <input type="text" class="pergunta${i+1}-respCerta" placeholder="Resposta correta">
+            <input type="url" class="pergunta${i+1}-respCertaImagem" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
         </form>
     </div>
     `;
 
 
-    for(let i = 0; i < 3; i ++){
+    for(let j = 0; j < 3; j ++){
 
         estrutura.innerHTML += `    
         <div class="resposta-incorreta">
             <h4>Respostas incorretas</h4>
             <form>
-                <input type="text" class="cx-input" placeholder="Resposta incorreta">
-                <input type="url" class="cx-input" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
+                <input type="text" class="pergunta${i+1}-respErrada${j+1}" placeholder="Resposta incorreta">
+                <input type="url" class="pergunta${i+1}-respErradaImagem${j+1}" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
             </form>
         </div>
         `;
@@ -682,82 +682,60 @@ function criarPerguntas(i){
 
 function renderizarPerguntasCriadas(){
     let numPerguntas = quantidadePerguntas();
-    let contador = 1;
+    let perguntaTitulo;
+    let corQuizz;
+
+   
     for (let i = 0; i < numPerguntas; i++){
-        adicionandoRespostas(contador);
-        contador += 5;
+        perguntaTitulo = document.querySelector(`.texto-pergunta${i+1}`).value;
+        corQuizz = document.querySelector(`.cor-fundo-pergunta${i+1}`).value;
+        adicionandoRespostas(i);
     }
-    console.log(quizzEnviado);
 }
 
 
-function adicionandoRespostas(contador){
+function adicionandoRespostas(i){
     
     /*
     precisamos achar um jeito de pegar as informaçoes que o usuário digitou nas perguntas. URGENTE!!!
     */
-    let perguntadoQuizz = document.querySelector(`.estrutura-perguntas :nth-child(${contador})`).value;
-    let corQuizz = document.querySelector(`.estrutura-perguntas :nth-child(${contador+1})`).value;
-    const respostaCorreta = document.querySelector(`.estrutura-perguntas :nth-child(${contador+2})`).value;
-    const imageRespostaCorreta = document.querySelector(".resposta-correta input:nth-child(2)").value;
-    const respostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
-    const imageRespostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
-    const respostaIncorreta2 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
-    const imageRespostaIncorreta2 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
-    const respostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
-    const imageRespostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
-    
-    let arrayRespostas = [];
-    let imagensRespostas = [];
-    let elementoRespostaErrada = document.querySelector(".resposta-incorreta");
-    let proximoErrado = elementoRespostaErrada.nextElementSibling;
 
+    // let respostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
+    // let imageRespostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
+    // let respostaIncorreta2 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
+    // let imageRespostaIncorreta2 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
+    // let respostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
+    // let imageRespostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
+    let respostaCorreta = document.querySelector(`.pergunta${i+1}-respCerta`).value;
+    let imageRespostaCorreta = document.querySelector(`.pergunta${i+1}-respCertaImagem`).value;
     let objResposta = {
         text: "",
         image: "",
         isCorrectAnswer: true
     };
-   
-    arrayRespostas.push(respostaCorreta);
-    imagensRespostas.push(imageRespostaCorreta);
-    
-    arrayRespostas.push(respostaIncorreta);
-    imagensRespostas.push(imageRespostaCorreta);
 
-    if((respostaIncorreta2 !== "") && (imageRespostaIncorreta2 !== "")) {
-        arrayRespostas.push(respostaIncorreta2);
-        imagensRespostas.push(imageRespostaIncorreta2);
-    } else {
-        arrayRespostas.push("");
-        imagensRespostas.push("");
+    objResposta.text = respostaCorreta;
+    objResposta.image = imageRespostaCorreta;
+    objResposta.isCorrectAnswer = true;
+
+    objPergunta.answers.push(objResposta);
+    alert(objPergunta.answers);
+
+    for (let j=0; j < 3; j++) {
+        let respostaIncorreta = document.querySelector(`.pergunta${i+1}-respErrada${j+1}`).value;
+        let imageRespostaIncorreta = document.querySelector(`.pergunta${i+1}-respErradaImagem${j+1}`).value;
+        if((respostaIncorreta !== "") && (imageRespostaIncorreta !== "")) {
+            objResposta.text = respostaIncorreta;
+            objResposta.image = imageRespostaIncorreta;
+            objResposta.isCorrectAnswer = false;
+
+            objPergunta.answers.push(objResposta);
+        } else {
+            alert("resposta vazia. quebrei o for");
+            break;
+        }
     }
-
-
-    if((respostaIncorreta3 !== "") && (imageRespostaIncorreta3 !== "")) {
-        arrayRespostas.push(respostaIncorreta3);
-        imagensRespostas.push(imageRespostaIncorreta3);
-    } else {
-        arrayRespostas.push("");
-        imagensRespostas.push("");
-    }
     
-    
-    perguntadoQuizz = document.querySelector(`.estrutura-perguntas :nth-child(${contador})`).value;
-    corQuizz = document.querySelector(`.estrutura-perguntas :nth-child(${contador+1})`).value;
-
-    
-    
-
-
-    objPergunta.title =  perguntadoQuizz;
-    objPergunta.color = corQuizz;
-    for (let j=0; j < 4; j++) {
-        objResposta.text = respostaCorreta;
-        objResposta.image = imageRespostaCorreta;
-        objResposta.isCorrectAnswer = true;
-
-        objPergunta.answers.push(objResposta);
-    }
     quizzEnviado.questions.push(objPergunta);
     
     // quizzEnviado.questions[i].answers.push({
