@@ -80,10 +80,10 @@
         width: 100%;
     }
     div .cx-dados-quizz input{
-        width: 90%;
+        width: 100%;
     }
     div .grade-2 input{
-        width: 90%;
+        width: 100%;
     }
     div .grade-2{
         width: 100%;
@@ -554,6 +554,7 @@ body {
     border-radius: 5px;
     border: 1px solid #D1D1D1;
     padding-left: 10px;
+    margin: 5px 0px;
     color: #BABABA;
     font-style: italic;
     font-size: 19px;
