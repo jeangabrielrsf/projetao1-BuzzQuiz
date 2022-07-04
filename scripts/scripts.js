@@ -91,16 +91,6 @@ function abrirQuiz () {
 
     let qtdPerguntas = escolhido.questions.length;
     let perguntas = escolhido.questions;
-    
-    
-
-
-    //RASCUNHO DE COMO É O FOR
-    // for (let i=0; i<qtdPerguntas; i++) {
-    //     for (let j=0; j < perguntas[i].answers.length; j++) {
-    //         console.log(perguntas[i].answers[j].text);
-    //     }
-    // }
 
     capa.innerHTML = "";
     pagina.innerHTML = "";
@@ -464,22 +454,25 @@ function prosseguiPraCriarNiveis(){
 
     for (let i=0; i < qtdNiveis; i++) {
         gradeNiveis.innerHTML += `
-            <div class="nivel">
-                <form>
-                    <h3>Nível ${i+1}</h3>
-                    <input type="text" class="titulo-nivel" placeholder="Título do nível" required>
-                    <input type="number" class="porcentagem-nivel" placeholder="% de acerto mínima" required>
-                    <input type="url" class="url-nivel" placeholder="URL da imagem do nível" required>
-                    <input type="text" class="descricao-nivel" placeholder="Descrição do nível" required>
-                </form>
-            </div>
+            
+                <div class="nivel">
+                    <form >
+                        <h3>Nível ${i+1}</h3>
+                        <input type="text" class="titulo-nivel" placeholder="Título do nível" required>
+                        <input type="number" class="porcentagem-nivel" placeholder="% de acerto mínima" required>
+                        <input type="url" class="url-nivel" placeholder="URL da imagem do nível" required>
+                        <input type="text" class="descricao-nivel" placeholder="Descrição do nível" required>
+                    </form>
+                </div>
+
         `;
     }
 
     gradeNiveis.innerHTML += `
-        <div class="botao-finalizar" onclick="finalizarQuizz()">
-            <p>Finalizar Quizz</p>
-        </div>
+            <div class="botao-finalizar" onclick="finalizarQuizz()">
+                <p>Finalizar Quizz</p>
+            </div>
+        
     `;
     grade2.classList.add("escondido");
     grade3.classList.remove("escondido");
@@ -550,6 +543,7 @@ function acessarQuizzCriado () {
 
     erros = 0;
     acertos = 0;
+    escolhido = quizzEnviado;
     let pergunta = document.querySelector(".pagina2 .caixa-pergunta");
 
     let qtdPerguntas = quizzEnviado.questions.length;
@@ -586,6 +580,7 @@ function acessarQuizzCriado () {
 function voltarPraHome(){
     const pagina3 = document.querySelector(".pagina3");
     const pagina1 = document.querySelector(".pagina1");
+    pagina3.innerHTML = "";
 
     pagina3.classList.add("escondido");
     pagina1.classList.remove("escondido");
@@ -645,9 +640,29 @@ function criarPerguntas(){
     for(let i = 0; i < 3; i ++){
         respostaFalse.innerHTML += `    
         <form>
+<<<<<<< HEAD
         <input type="text" class="cx-input" placeholder="Resposta incorreta">
         <input type="url" class="cx-input" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
         </form>
+=======
+            <input type="text" class="pergunta${i+1}-resp1" placeholder="Resposta correta">
+            <input type="url" class="pergunta${i+1}-respImagem1" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
+        </form>
+    </div>
+    `;
+
+
+    for(let j = 1; j < 4; j ++){
+
+        estrutura.innerHTML += `    
+        <div class="resposta-incorreta">
+            <h4>Respostas incorretas</h4>
+            <form>
+                <input type="text" class="pergunta${i+1}-resp${j+1}" placeholder="Resposta incorreta">
+                <input type="url" class="pergunta${i+1}-respImagem${j+1}" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
+            </form>
+        </div>
+>>>>>>> 458064560d17bcf13c7a51204e366fd48b8804a5
         `;
     
     }
@@ -655,6 +670,7 @@ function criarPerguntas(){
 
 }
 
+<<<<<<< HEAD
 function reiderirarPerguntasCriadas(){
 let numPerguntas = quantidadePerguntas();
     for (let i = 0; i < numPerguntas; i++){
@@ -681,6 +697,17 @@ function adicionandoRespostas(i){
     quizzEnviado.questions[i].answers[0].push({
         text: respostaCorreta,
         image: imageRespostaCorreta,
+=======
+function renderizarPerguntasCriadas(){
+    let numPerguntas = quantidadePerguntas();
+    let perguntaTitulo;
+    let corQuizz;
+    let resposta1, resposta2, resposta3,resposta4;
+    let imagemResposta1, imagemResposta2, imagemResposta3, imagemResposta4;
+    let objResposta = {
+        text: "",
+        image: "",
+>>>>>>> 458064560d17bcf13c7a51204e366fd48b8804a5
         isCorrectAnswer: true
     });
 
@@ -704,6 +731,7 @@ function adicionandoRespostas(i){
         });
     };
 
+<<<<<<< HEAD
     const respostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
     const imageRespostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
 
@@ -716,4 +744,54 @@ function adicionandoRespostas(i){
     };
     i++
     console.log(questions);
+=======
+   
+    for (let i = 0; i < numPerguntas; i++){
+        perguntaTitulo = document.querySelector(`.texto-pergunta${i+1}`).value;
+        corQuizz = document.querySelector(`.cor-fundo-pergunta${i+1}`).value;
+        
+        objPergunta.title = perguntaTitulo;
+        objPergunta.color = corQuizz;
+        
+        resposta1 = document.querySelector(`.pergunta${i+1}-resp1`).value;
+        imagemResposta1 = document.querySelector(`.pergunta${i+1}-respImagem1`).value;
+        objResposta.text = resposta1;
+        objResposta.image = imagemResposta1;
+        objResposta.isCorrectAnswer = true;
+        objPergunta.answers.push(objResposta);
+
+        resposta2 = document.querySelector(`.pergunta${i+1}-resp2`).value;
+        imagemResposta2 = document.querySelector(`.pergunta${i+1}-respImagem2`).value;
+        objResposta.text = resposta2;
+        objResposta.image = imagemResposta2;
+        objResposta.isCorrectAnswer = false;
+        objPergunta.answers.push(objResposta);
+
+        resposta3 = document.querySelector(`.pergunta${i+1}-resp3`).value;
+        imagemResposta3 = document.querySelector(`.pergunta${i+1}-respImagem3`).value;
+        objResposta.text = resposta3;
+        objResposta.image = imagemResposta3;
+        objResposta.isCorrectAnswer = false;
+        objPergunta.answers.push(objResposta);
+
+        resposta4 = document.querySelector(`.pergunta${i+1}-resp4`).value;
+        imagemResposta4 = document.querySelector(`.pergunta${i+1}-respImagem4`).value;
+        objResposta.text = resposta4;
+        objResposta.image = imagemResposta4;
+        objResposta.isCorrectAnswer = false;
+        objPergunta.answers.push(objResposta);
+
+        
+        
+        console.log(objResposta);
+        console.log(objPergunta);
+
+        
+        //adicionandoRespostas(i);
+        
+        quizzEnviado.questions.push(objPergunta);
+    }
+    //console.log(quizzEnviado);
+    
+>>>>>>> 458064560d17bcf13c7a51204e366fd48b8804a5
 }
