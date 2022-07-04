@@ -476,7 +476,7 @@ function prosseguiPraCriarNiveis(){
     }
 
     gradeNiveis.innerHTML += `
-            <div class="botao-finalizar">
+            <div class="botao-finalizar" onclick="finalizarQuizz()">
                 <p>Finalizar Quizz</p>
             </div>
         
@@ -549,6 +549,7 @@ function acessarQuizzCriado () {
 
     erros = 0;
     acertos = 0;
+    escolhido = quizzEnviado;
     let pergunta = document.querySelector(".pagina2 .caixa-pergunta");
 
     let qtdPerguntas = quizzEnviado.questions.length;
@@ -585,6 +586,7 @@ function acessarQuizzCriado () {
 function voltarPraHome(){
     const pagina3 = document.querySelector(".pagina3");
     const pagina1 = document.querySelector(".pagina1");
+    pagina3.innerHTML = "";
 
     pagina3.classList.add("escondido");
     pagina1.classList.remove("escondido");
