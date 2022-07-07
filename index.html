@@ -13,151 +13,15 @@
 </head>
 <body>
     <!--PARTE DO TÍTULO-->
-    <div class="titulo">
+    <div class="titulo" onclick="iniciarPagina()">
        <h1>BuzzQuizz</h1>
     </div>
     <!--DIV PAI DAS PAGINAS-->
     <div class="pai">
         <!--PÁGINA 1-->
-        
-        <div class="pagina1 ">
-            <div class="criar-quizz ">
-                <p>Você não criou nenhum</br> quizz ainda :(</p>
-                <div class="criar-quiz-botao" onclick="criarQuizz()">
-                    <p>Criar Quizz</p>
-                </div>
-            </div>
-            <div class="seus-quizz-criar escondido">
-                <p>Seus Quizzes</p>
-                <img src="img/Group 22.png" onclick="criarQuizz()">
-            </div>
-            <div class="seus-quizzes">
-                <div class="quizzes-criados escondido">
-                    <div class="quizz" style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(img/Rectangle\ 34.png)">
-                        <div><h3>Titulo quizz</h3></div>
-                    </div>
-                </div>
-            </div>
-            <div class="todos-quizzes">
-               <div><h3>Todos os Quizzes</h3></div>
-                <div class="quizzes">
+        <div class="pagina ">
             
-                </div>
-            </div>   
         </div>
-
-        <!--PÁGINA 2-->
-        <div class="pagina2 escondido">
-            <div class="capa-quiz" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(./img/narutin-sasukin.png)">
-                <p>Título do Quiz</p>
-            </div>
-
-            <div class="caixa-pergunta">
-                <div class="titulo-pergunta" style="background-color: steelblue">
-                    <h2>Título da pergunta aqui.</h2>
-                </div>
-                
-                <div class="respostas">
-                    <div class="resposta" onclick="selecionarResposta(this)">
-                        <img src="./img/choji.jpeg" alt="">
-                        <p>RESPOSTA 1</p>
-                    </div>
-                    <div class="resposta" onclick="selecionarResposta(this)">
-                        <img src="./img/konohomaru.jpg" alt="">
-                        <p>RESPOSTA 2</p>
-                    </div>
-                    <div class="resposta" onclick="selecionarResposta(this)">
-                        <img src="./img/Might_Guy-740x536.png" alt="">
-                        <p>RESPOSTA 3</p>
-                    </div>
-                    <div class="resposta" onclick="selecionarResposta(this)">
-                        <img src="./img/rock-lee.png" alt="">
-                        <p>RESPOSTA 4</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fim-quizz">
-                <div class="titulo-fim-quizz">
-                    <p>% de acertos no quiz.</p>
-                </div>
-                <div class="caixa-texto-fim">
-                    <div class="imagem-fim">
-                        <img src="./img/narutin-sasukin.png" alt="">
-                    </div>
-                    <div class="texto-fim">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-                    </div>
-                </div>
-                <div class="botao-reiniciar">
-                    <p>Reiniciar Quizz</p>
-                </div>
-    
-                <div class="botao-voltar">
-                    <p>Voltar pra home</p>
-                </div>
-            </div>
-
-
-           
-
-        </div>
-        <div class="pagina3 ">
-            <div class="grade-1">  
-                <h3>Comece pelo começo</h3>
-                <div class="cx-dados-quizz">
-
-                </div>
-                <button class="prosseguir-criar-perguntas" onclick="enviaTituloQuizz()">
-                    <p>Prosseguir criar perguntas</p>
-                </button>
-            </div>
-            <div class="grade-2 escondido">
-                <h3>Crie suas perguntas</h3>
-                <div class="pergunta">
-                    <h4>Pergunta 1</h4>
-
-                </div>
-                <div class="resposta-correta">
-                    <h4>Resposta Correta</h4>
-
-                </div>
-                <div class="resposta-incorreta">
-                    <h4>Respostas incorretas</h4>
-                  
-                
-                </div>
-                <div class="prosseguir-pra-niveis" onclick="prosseguiPraCriarNiveis()">
-                    <p>Prosseguir pra criar níveis</p>
-                </div>
-            </div>
-            <div class="grade-niveis escondido">
-                
-                    <div class="nivel">
-                        <form>
-                            <h3>Nível 1</h3>
-                            <input type="text" class="titulo-nivel" placeholder="Título do nível" required>
-                            <input type="number" class="porcentagem-nivel" placeholder="% de acerto mínima" required>
-                            <input type="url" class="url-nivel" placeholder="URL da imagem do nível" required>
-                            <input type="text" class="descricao-nivel" placeholder="Descrição do nível" required>
-                        </form>
-                    </div>
-                
-                <div class="botao-finalizar" onclick="finalizarQuizz()">
-                    <p>Finalizar Quizz</p>
-                </div>
-            </div>
-            <div class="grade-3 escondido">
-                <h3>Seu quizz está pronto!</h3>
-                <div class="quizz" style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(img/narutin-sasukin.png)">
-                    <div><h3>Titulo quizz</h3></div>
-                </div>
-                <div class="acessar-quizz" onclick="acessarQuizz()"><p>Acessar Quizz</p></div>
-                <div class="voltar-pra-home" onclick="voltarPraHome()"><p>Voltar pra home</p></div> 
-            </div>
-
-        </div>
-
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./scripts/scripts.js"></script>

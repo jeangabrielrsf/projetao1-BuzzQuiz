@@ -5,6 +5,12 @@
     box-sizing: border-box;
 }
 
+/* .pai {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
 /* RESPONSIVIDADE  */
 
 @media (max-width: 1100px){
@@ -176,7 +182,6 @@ body {
 }
 
 .seus-quizzes{
-    margin: 0px auto 0px;
     width: 1051px;
     height: 400px;
     padding: 1px;
@@ -210,7 +215,6 @@ body {
 
 
 .todos-quizzes{
-    margin: 100px auto 0px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -288,7 +292,7 @@ body {
 
 /* CLASSES UTILIZADAS NA PÁGINA 2 */
 
-.pagina2 {
+.pagina {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -469,42 +473,37 @@ body {
 /* PAGINA 3 (PARTE 1) */
 
 
-.pagina3{
-}
-
-.grade-1{
-    margin: 140px 35% 0px;
-    
-}
-
-.grade-1 h3{
-    margin: 20px  30% 30px;
-    width: 300px;
-    font-weight: 700;
-    font-size: 23px;
-}
- 
-.cx-dados-quizz{
-    height: 256px;
-    width: 600px;
-    margin: 50px 0px;
+.cx-dados-quizz {
+    margin-top: 150px;
     display: flex;
-    align-items: center;
     flex-direction: column;
-    justify-content: space-evenly;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.cx-dados-quizz form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
 }
 
 .cx-dados-quizz input{
-    width: 564px;
+    width: 85%;
     height: 46px;
     border-radius: 5px;
     border: 1px solid #D1D1D1;
     padding-left: 10px;
-    color: #BABABA;
     font-style: italic;
     font-size: 19px;
     font-weight: 400;
     margin: 10px 0px;
+    transition: width 1s;
+}
+.cx-dados-quizz input:hover {
+    width: 90%;
+    opacity: 0.7;
 }
 
 .prosseguir-criar-perguntas{
@@ -516,74 +515,78 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.prosseguir-criar-perguntas{
     font-weight: 400;
     font-size: 21px;
     line-height: 25px;
     color: #FFF5F4;
 }
 
-.grade-2{
-    width: 600px;
-    margin: 150px auto;
-    
+.prosseguir-criar-perguntas:hover{ 
+    transform: scale(0.95);
+    cursor: pointer;
 }
 
-.grade-2 h3{
-    font-size: 23px;
-    font-weight: 700;
-    line-height: 27px;
-    margin: 20px 30% 70px;
-}
 
-.grade-2 h4{
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 23px;
-    margin-bottom: 15px;
-}
-
-.pergunta{
+.pergunta { 
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
     height: 190px;
+    width: 100%;
+    margin-top: 200px;
+    margin-bottom: 70px;
+    border: solid black 1px;
 }
 
-.grade-2 input{ 
-    width: 564px;
+.resposta-correta {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0px;
+}
+
+.resposta-incorreta {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0px;
+}
+
+.pergunta form,
+.resposta-correta form,
+.resposta-incorreta form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.pergunta input,
+.resposta-correta input,
+.resposta-incorreta input{ 
+    width: 85%;
     height: 46px;
     border-radius: 5px;
     border: 1px solid #D1D1D1;
-    padding-left: 10px;
-    margin: 5px 0px;
     color: #BABABA;
     font-style: italic;
     font-size: 19px;
     font-weight: 400;
+    margin: 5px 0px;
+    transition: width 1s;
 }
 
-.resposta-correta{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 190px;
+.pergunta input:hover,
+.resposta-correta input:hover,
+.resposta-incorreta input:hover {
+    width: 90%;
+    opacity: 0.7;
 }
 
-.resposta-incorreta{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
 
-.incorreta{
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
 
 .prosseguir-pra-niveis{
     width: 220.32px;
@@ -594,29 +597,17 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 70px auto 30px;
-}
-.prosseguir-pra-niveis p{
+    margin-top: 150px;
     color: #ffffff;
     font-size: 21px;
     font-weight: 400;
 }
-.grade-3{
-    width: 600px;
-    margin: 150px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+
+.prosseguir-pra-niveis:hover {
+    transform: scale(0.95);
+    cursor: pointer;
 }
 
-
-.grade-3 h3{
-    font-size: 23px;
-    font-weight: 700;
-    line-height: 27px;
-    margin-bottom: 80px;
-}
 
 .acessar-quizz p{
     color: #ffffff;

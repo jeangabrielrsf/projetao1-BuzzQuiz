@@ -1,9 +1,10 @@
-const urlAPI = "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/";
+const urlAPI = "https://mock-api.driven.com.br/api/vs/buzzquizz/quizzes/";
 let quizes = quizesCriados = []; 
 let escolhido; //variável para guardar o objeto de um quiz.
 let erros = 0;
 let acertos = 0;
 let resultado = 0;
+let qtdNiveis = 0;
 
 let quizzEnviado = {
 	title: "",
@@ -13,23 +14,71 @@ let quizzEnviado = {
 }; 
 
 
-const promessa = axios.get(urlAPI);
-promessa.then(processarResposta);
+function requisitarQuizzes() {
+    const promessa = axios.get(urlAPI);
+    promessa.then(processarResposta);
+    promessa.catch (erroRequisitarQuizzes);
+}
+
+function erroRequisitarQuizzes(erro) {
+    const code = erro.response.status;
+    if (code !== 200) {
+        alert("Erro ao requisitar o quizz clicado. Reiniciando a página.");
+        window.reload();
+    }
+}
 
 function processarResposta(jogos){
-    console.log(jogos.data);
-    quizes = jogos.data;
+    //console.log(jogos.data);
+    const code = jogos.status;
+    if (code === 200) {
+        quizes = jogos.data;
+        renderizarQuizzes();
+    }
+}
 
-    renderizarQuizzes();
+
+function iniciarPagina () {
+    let pagina = document.querySelector(".pagina");
+
+    pagina.innerHTML = ""; //zerando a página
+    pagina.innerHTML = `
+        <div class="criar-quizz ">
+            <p>Você não criou nenhum</br> quizz ainda :(</p>
+            <div class="criar-quiz-botao" onclick="criarQuizz()">
+                <p>Criar Quizz</p>
+            </div>
+        </div>
+        <div class="seus-quizz-criar escondido">
+            <p>Seus Quizzes</p>
+            <img src="img/Group 22.png" onclick="criarQuizz()">
+        </div>
+        <div class="seus-quizzes escondido">
+            <div class="quizzes-criados escondido">
+                <div class="quizz" style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(img/Rectangle\ 34.png)">
+                    <div>
+                        <h3>Titulo quizz</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="todos-quizzes">
+        <div><h3>Todos os Quizzes</h3></div>
+            <div class="quizzes">
+
+            </div>
+        </div>   
+    `;
+    requisitarQuizzes();
 }
 
 function renderizarQuizzes(){
 
-    const ul = document.querySelector('.quizzes');
+    let quizzes  = document.querySelector(".quizzes");
 
-    for(let i = 0; i < 12; i++){
+    for(let i = 0; i < quizes.length; i++){
 
-        ul.innerHTML += `
+        quizzes.innerHTML += `
             <div class="quizz" style="background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.1%, #000000 100%), url(${quizes[i].image})" onclick="selecionarQuiz(this)">
                 <p class="id-quiz">${quizes[i].id}</p>
                 <div><h3>${quizes[i].title}</h3></div>
@@ -38,8 +87,8 @@ function renderizarQuizzes(){
     }
 }
 
+iniciarPagina();
 
-//renderizarQuizzes();
 
 
 
@@ -63,37 +112,27 @@ function selecionarQuiz (elemento) {
 /*SE A REQUISIÇÃO DO AXIOS DEU CERTO, EXECUTA ESSA FUNÇÃO*/
 function checarQuiz(resposta) {
     const codigo = resposta.status; //variável para visualizar o código de retorno que ta dando
-    escolhido = resposta.data;
+   
     
     if (codigo === 200) {
-        esconderTela1();
+        escolhido = resposta.data;
         abrirQuiz();
     }
 }
 
 
-/*FUNÇÃO MALANDRA PARA MUDAR DE TELAS*/
-function esconderTela1 () {
-    const pagina1 = document.querySelector(".pagina1");
-    const pagina2 = document.querySelector(".pagina2");
 
-    pagina1.classList.add("escondido");
-    pagina2.classList.remove("escondido");
 
-}
-
-/*FUNÇÃO PARA RENDERIZAR A PÁGINA DO QUIZ (TELA 2)*/
 function abrirQuiz () {
     erros = 0;
     acertos = 0;
-    const pagina = document.querySelector(".pagina2 .caixa-pergunta");
-    let capa = document.querySelector(".pagina2")
+    let stringPagina2 = "";
+    let capa = document.querySelector(".pagina")
 
     let qtdPerguntas = escolhido.questions.length;
     let perguntas = escolhido.questions;
 
     capa.innerHTML = "";
-    pagina.innerHTML = "";
 
     capa.innerHTML += `
         <div class="capa-quiz" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${escolhido.image})">
@@ -102,8 +141,7 @@ function abrirQuiz () {
         `;
     for (let i=0; i < qtdPerguntas; i++) {
         
-        //console.log(`pergunta ${i}`);
-        pagina.innerHTML += `
+        stringPagina2 += `
             <div class="caixa-pergunta">
                 <div class="titulo-pergunta" style="background-color: ${perguntas[i].color}">
                     <h2>${perguntas[i].title}</h2>
@@ -114,14 +152,14 @@ function abrirQuiz () {
             </div>
         `;
     }
-    capa.innerHTML += pagina.innerHTML;
-    document.querySelector(".capa-quiz").scrollIntoView(true);
+    capa.innerHTML += stringPagina2;
+    document.querySelector(".pagina").scrollIntoView({behavior:"smooth", block:"start", inline:"nearest"});
 }
 
 
 
 function renderizarFimQuizz(nivel) {
-    let pagina = document.querySelector(".pagina2");
+    let pagina = document.querySelector(".pagina");
     let string = "";
     string = `
         <div class="fim-quizz">
@@ -141,7 +179,7 @@ function renderizarFimQuizz(nivel) {
             <p>Reiniciar Quizz</p>
         </div>
 
-        <div class="botao-voltar" onclick="voltarHomePg2()">
+        <div class="botao-voltar" onclick="iniciarPagina()">
             <p>Voltar pra home</p>
         </div>
         
@@ -177,16 +215,7 @@ function reiniciarQuizz() {
     abrirQuiz();
 }
 
-function voltarHomePg2 () {
-    pagina2 = document.querySelector(".pagina2");
-    pagina1 = document.querySelector(".pagina1");
-    pai = document.querySelector(".pai");
 
-    pagina2.classList.add("escondido");
-    pagina1.classList.remove("escondido");
-    renderizarQuizzes();
-    pai.scrollIntoView(true);
-}
 
 
 function calcularAcertos() {
@@ -257,7 +286,7 @@ function erroAbrirQuiz(erro) {
         alert("mano, deu ruim ao abrir esse quiz.");
     }
     //renderiza mais uma vez os quizes para o usuário escolher.
-    renderizarQuizzes();
+    requisitarQuizzes();
 }
 
 
@@ -394,66 +423,100 @@ function mostrarFimQuizz() {
 
 // FUNÇÃO PARA POSTAR TITULO E A IMAGEM DO QUIZZ
 function criarQuizz(){
-    const pagina1 = document.querySelector('.pagina1');
-    const pagina3 = document.querySelector('.pagina3');
-
-    pagina1.classList.add("escondido");
-    pagina3.classList.remove("escondido");
-    criandoQuizz();
+    const pagina = document.querySelector('.pagina');
     
+    pagina.innerHTML = ""; //zerando a página
+
+
+    pagina.innerHTML = `
+        
+        <div class="cx-dados-quizz">
+            <h3>Comece pelo começo</h3>
+            <form>
+                <input type="text" class="titulo-quizz" placeholder="Título do seu quizz" pattern="[A-Za-z].{1,20}">
+                <input type="text" class="imagem-quizz" placeholder="URL da imagem do seu quizz">
+                <input type="text" class="quantidade-perguntas" placeholder="Quantidade de perguntas do quizz">
+                <input type="text" class="quantidade-niveis" placeholder="Quantidade de níveis do quizz">
+            </form>
+        </div>
+        <button class="prosseguir-criar-perguntas" onclick="pegarInfosQuizz()">
+            <p>Prosseguir criar perguntas</p>
+        </button>
+    `;    
 }
 
-function postarTituloQuiz(){
 
-    const tituloQuizz = document.querySelector("input:nth-child(1)").value;
-    const imagemQuizz = document.querySelector("input:nth-child(2)").value;
-    
 
- //   quizzEnviado.push({
-  //      title: tituloQuizz,
-   //     image: imagemQuizz
-//});
-  //  console.log(quizzEnviado);
+function pegarInfosQuizz(){
+
+    quizzEnviado.title = document.querySelector(".titulo-quizz").value;
+    quizzEnviado.image = document.querySelector(".imagem-quizz").value;
+    qtdNiveis = document.querySelector(".quantidade-niveis").value;
+    criarPerguntasQuizz();
+}
+
+
+function criarPerguntasQuizz () {
+    let pagina = document.querySelector(".pagina");
+    let numPerguntas = quantidadePerguntas();
+
+    pagina.innerHTML = "";
+    pagina.innerHTML = `
+        <h3>Crie suas perguntas</h3>
+    `;
+    for (let i=0; i < numPerguntas; i++) {
+        //falta implementar o loop das respostas
+        pagina.innerHTML += `
+        <div class="pergunta">
+            <h4>Pergunta ${i+1}</h4>
+            <form>
+                <input type="text" class="texto-pergunta" placeholder="Texto da pergunta" pattern="[A-Za-z].{20,65}">
+                <h5>Escolha a cor de fundo da pergunta:</h5>
+                <input type="color" class="cor-pergunta" placeholder="Cor de fundo da pergunta">
+            </form>
+           
+            <div class="resposta-correta">
+                <h4>Resposta Correta</h4>
+                <form>
+                    <input type="text" class="texto-respostaCerta-pergunta${i+1}" placeholder="Resposta correta">
+                    <input type="url" class="imagem-respostaCerta-pergunta${i+1}" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
+                </form>
+            </div>
+            <div class="resposta-incorreta">
+                <h4>Resposta incorreta</h4>
+                <form>
+                    <input type="text" class="texto-respostaErrada-pergunta${i+1}" placeholder="Resposta incorreta">
+                    <input type="url" class="imagem-respostaErrada-pergunta${i+1}" placeholder="URL da imagem" pattern="https?://.+" title="Include http://">
+                </form>
+            </div>
+        </div>
+        `
+    }
+
+    pagina.innerHTML += `
+        <div class="prosseguir-pra-niveis" onclick="prosseguiPraCriarNiveis()">
+            <p>Prosseguir pra criar níveis</p>
+        </div>
+    `;
 }
 
 // QUANTIDADE DE PERGUNTAS A SEREM CRIADAS
 function quantidadePerguntas(){
     
-    const numeroPerguntas = document.querySelector("input:nth-child(3)").value
+    const numeroPerguntas = document.querySelector(".quantidade-perguntas").value
     console.log(numeroPerguntas);
     return numeroPerguntas;
 }
 
-// QUANTIDADE DE NÍVES A SEREM CRIADOS
-function quantidadeNiveis(){
 
-    const numeroNiveis = document.querySelector("input:nth-child(4)").value
-    console.log(numeroNiveis);
-    return numeroNiveis;
-}
-
-
-function enviaTituloQuizz(){
-    const grade1 = document.querySelector(".grade-1");
-    const grade2 = document.querySelector(".grade-2");
-
-    grade1.classList.add("escondido");
-    grade2.classList.remove("escondido");
-   // postarTituloQuiz();
-    numeroDePerguntas()
-    
-}
 
 function prosseguiPraCriarNiveis(){
-    const grade2 = document.querySelector(".grade-2");
-    const grade3 = document.querySelector(".grade-3");
-    let gradeNiveis = document.querySelector(".grade-niveis");
-    let qtdNiveis = quantidadeNiveis();
+    let pagina = document.querySelector(".pagina");
 
-    gradeNiveis.innerHTML = "";
+    pagina.innerHTML = "";
 
     for (let i=0; i < qtdNiveis; i++) {
-        gradeNiveis.innerHTML += `
+        pagina.innerHTML += `
             
                 <div class="nivel">
                     <form >
@@ -468,25 +531,18 @@ function prosseguiPraCriarNiveis(){
         `;
     }
 
-    gradeNiveis.innerHTML += `
+    pagina.innerHTML += `
             <div class="botao-finalizar" onclick="finalizarQuizz()">
                 <p>Finalizar Quizz</p>
             </div>
         
     `;
-    grade2.classList.add("escondido");
-    grade3.classList.remove("escondido");
-    adicionandoRespostas();
-    gradeNiveis.classList.remove("escondido");
-    reiderirarPerguntasCriadas();
 }
 
 
 
 function finalizarQuizz() {
-    const qtdNiveis = quantidadeNiveis();
-    const gradeNiveis = document.querySelector(".grade-niveis");
-    const grade3 = document.querySelector(".grade-3");
+    
     let nivel = document.querySelector(".nivel");
     let tituloNivel;
     let porcentagem;
@@ -515,14 +571,12 @@ function finalizarQuizz() {
         nivel = nivel.nextElementSibling;
     }
     
-    gradeNiveis.classList.add("escondido");
-    grade3.classList.remove("escondido");
     renderizarFimQuizzCriado();
     console.log(quizzEnviado);
 }
 
 function renderizarFimQuizzCriado () {
-    let pagina = document.querySelector(".grade-3");
+    let pagina = document.querySelector(".pagina");
     pagina.innerHTML = "";
     pagina.innerHTML = `
         <h3>Seu quizz está pronto!</h3>
@@ -530,29 +584,21 @@ function renderizarFimQuizzCriado () {
             <div><h3>${quizzEnviado.title}</h3></div>
         </div>
         <div class="acessar-quizz" onclick="acessarQuizzCriado()"><p>Acessar Quizz</p></div>
-        <div class="voltar-pra-home" onclick="voltarPraHome()"><p>Voltar pra home</p></div> 
+        <div class="voltar-pra-home" onclick="iniciarPagina()"><p>Voltar pra home</p></div> 
         `;
 }
 
 function acessarQuizzCriado () {
-    const pagina3 = document.querySelector(".pagina3");
-    let pagina2 = document.querySelector(".pagina2");
-
-    pagina3.classList.add("escondido");
-    pagina2.classList.remove("escondido");
-
+    let pagina = document.querySelector(".pagina");
+    let perguntaStr = "";
+    let qtdPerguntas = quizzEnviado.questions.length;
+    let perguntas = quizzEnviado.questions;
     erros = 0;
     acertos = 0;
     escolhido = quizzEnviado;
-    let pergunta = document.querySelector(".pagina2 .caixa-pergunta");
+    pagina.innerHTML = "";
 
-    let qtdPerguntas = quizzEnviado.questions.length;
-    let perguntas = quizzEnviado.questions;
-    
-    pagina2.innerHTML = "";
-    pergunta.innerHTML = "";
-
-    pagina2.innerHTML += `
+    pagina.innerHTML += `
         <div class="capa-quiz" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${quizzEnviado.image})">
             <p>${quizzEnviado.title}</p>
         </div>
@@ -560,7 +606,7 @@ function acessarQuizzCriado () {
     for (let i=0; i < qtdPerguntas; i++) {
         
         //console.log(`pergunta ${i}`);
-        pergunta.innerHTML += `
+        perguntaStr += `
             <div class="caixa-pergunta">
                 <div class="titulo-pergunta" style="background-color: ${perguntas[i].color}">
                     <h2>${perguntas[i].title}</h2>
@@ -571,45 +617,11 @@ function acessarQuizzCriado () {
             </div>
         `;
     }
-    pagina2.innerHTML += pergunta.innerHTML;
+    pagina.innerHTML += perguntaStr;
     document.querySelector(".capa-quiz").scrollIntoView(true);
 }
 
 
-
-function voltarPraHome(){
-    const pagina3 = document.querySelector(".pagina3");
-    const pagina1 = document.querySelector(".pagina1");
-    pagina3.innerHTML = "";
-
-    pagina3.classList.add("escondido");
-    pagina1.classList.remove("escondido");
-}
-// grade1
-function criandoQuizz(){
-
-    const infoQuizz = document.querySelector(".cx-dados-quizz");
-    
-    infoQuizz.innerHTML = `
-    <form>
-    <input type="text" class="cx-input" placeholder="Título do seu quizz" pattern="[A-Za-z].{1,20}">
-    <input type="text" class="cx-input" placeholder="URL da imagem do seu quizz">
-    <input type="text" class="cx-input" placeholder="Quantidade de perguntas do quizz">
-    <input type="text" class="cx-input" placeholder="Quantidade de níveis do quizz">
-    </form>
-    `;
-
-}
-
-function numeroDePerguntas(){
-let numPerguntas = quantidadePerguntas();
-const pagina = document.querySelector(".grade-2");
-
-
- for (let i = 0; i < numPerguntas; i++){
-    criarPerguntas();
- }
-}
 
 function criarPerguntas(){
 
@@ -666,125 +678,4 @@ function criarPerguntas(){
   
 
 }
-
-function reiderirarPerguntasCriadas(){
-let numPerguntas = quantidadePerguntas();
-    for (let i = 0; i < numPerguntas; i++){
-        adicionandoRespostas(i);
-    }
-
-}
-
-
-let i = 0;
-function adicionandoRespostas(i){
-    
-    const perguntadoQuizz = document.querySelector(".pergunta input:nth-child(1)").value;
-    const corQuizz = document.querySelector(".pergunta input:nth-child(2)").value;
-    
-    quizzEnviado.questions[i].push({
-        title: perguntadoQuizz,
-        color: corQuizz
-    });
-    
-    const respostaCorreta = document.querySelector(".resposta-correta input:nth-child(1)").value;
-    const imageRespostaCorreta = document.querySelector(".resposta-correta input:nth-child(2)").value;
-
-    quizzEnviado.questions[i].answers[0].push({
-        text: respostaCorreta,
-        image: imageRespostaCorreta,})
-function renderizarPerguntasCriadas(){
-    let numPerguntas = quantidadePerguntas();
-    let perguntaTitulo;
-    let corQuizz;
-    let resposta1, resposta2, resposta3,resposta4;
-    let imagemResposta1, imagemResposta2, imagemResposta3, imagemResposta4;
-    let objResposta = ({
-        text: "",
-        image: "",
-        isCorrectAnswer: true
-    });
-}
-}
-
-    const respostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
-    const imageRespostaIncorreta = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
-
-    quizzEnviado.questions[i].answers[1].push({
-        text: respostaIncorreta,
-        image: imageRespostaIncorreta,
-        isCorrectAnswer: false
-    });
-
-    const respostaIncorreta2 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
-    const imageRespostaIncorreta2 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
-
-    if((respostaIncorreta2 !== "") && (imageRespostaIncorreta2 !== "")){
-        quizzEnviado.questions[i].answers[2].push({
-            text: respostaIncorreta2,
-            image: imageRespostaIncorreta2,
-            isCorrectAnswer: false
-        });
-    };
-
-    const respostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(1)").value;
-    const imageRespostaIncorreta3 = document.querySelector(".resposta-incorreta input:nth-child(2)").value;
-
-    if((respostaIncorreta3 !== "") && (imageRespostaIncorreta3 !== "")){
-        quizzEnviado.questions[i].answers[3].push({
-            text: respostaIncorreta3,
-            image: imageRespostaIncorreta3,
-            isCorrectAnswer: false
-        });
-    };
-    i++
-    console.log(questions);
-   
-    for (let i = 0; i < numPerguntas; i++){
-        perguntaTitulo = document.querySelector(`.texto-pergunta${i+1}`).value;
-        corQuizz = document.querySelector(`.cor-fundo-pergunta${i+1}`).value;
-        
-        objPergunta.title = perguntaTitulo;
-        objPergunta.color = corQuizz;
-        
-        resposta1 = document.querySelector(`.pergunta${i+1}-resp1`).value;
-        imagemResposta1 = document.querySelector(`.pergunta${i+1}-respImagem1`).value;
-        objResposta.text = resposta1;
-        objResposta.image = imagemResposta1;
-        objResposta.isCorrectAnswer = true;
-        objPergunta.answers.push(objResposta);
-
-        resposta2 = document.querySelector(`.pergunta${i+1}-resp2`).value;
-        imagemResposta2 = document.querySelector(`.pergunta${i+1}-respImagem2`).value;
-        objResposta.text = resposta2;
-        objResposta.image = imagemResposta2;
-        objResposta.isCorrectAnswer = false;
-        objPergunta.answers.push(objResposta);
-
-        resposta3 = document.querySelector(`.pergunta${i+1}-resp3`).value;
-        imagemResposta3 = document.querySelector(`.pergunta${i+1}-respImagem3`).value;
-        objResposta.text = resposta3;
-        objResposta.image = imagemResposta3;
-        objResposta.isCorrectAnswer = false;
-        objPergunta.answers.push(objResposta);
-
-        resposta4 = document.querySelector(`.pergunta${i+1}-resp4`).value;
-        imagemResposta4 = document.querySelector(`.pergunta${i+1}-respImagem4`).value;
-        objResposta.text = resposta4;
-        objResposta.image = imagemResposta4;
-        objResposta.isCorrectAnswer = false;
-        objPergunta.answers.push(objResposta);
-
-        
-        
-        console.log(objResposta);
-        console.log(objPergunta);
-
-        
-        //adicionandoRespostas(i);
-        
-        quizzEnviado.questions.push(objPergunta);
-    }
-    //console.log(quizzEnviado);
-    
 }
